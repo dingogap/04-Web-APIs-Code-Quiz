@@ -47,6 +47,9 @@ I'll use this Challenge to better understand using the DOM. I'll use JS to add/r
 7. phaseThree function defined
 8. added countdown timer for quiz
 9. added click event to change multi-choice answers 
+10. styled phaseTwo panel
+11. created function to remove all child elements of a parent
+12. added check if question answered & aply penalty if wrong
 
 
 

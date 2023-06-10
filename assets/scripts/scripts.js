@@ -7,6 +7,7 @@ var buttonEl;
 var timerEl;
 var theQuizEl;
 var quiz;
+var newHighScore;
 
 phaseOne();
 
@@ -31,16 +32,28 @@ function phaseTwo() {
 
     theQuizEl.addEventListener("click", function (event) {
         var element = event.target;
-
         // Checks if element is a button
         if (element.matches("button") === true) {
             // Get its data-index value and remove the todo element from the list
+            if (element.value != quiz[askQuestion].answer) {
+                timerCount = timerCount - 15;
+                if (timerCount <= 0) {
+                    newHighScore = 0;
+                    phaseThree();
+                }
+
+            }
+
             while (theQuizEl.firstChild) {
                 theQuizEl.removeChild(theQuizEl.firstChild);
             }
             askQuestion++;
-            showQuestion();
-            showPrompts();
+            if (askQuestion < quiz.length) {
+                showQuestion();
+                showPrompts();
+            } else {
+                phaseThree();
+            }
         }
     });
 
@@ -49,10 +62,8 @@ function phaseTwo() {
 
 function phaseThree() {
 
-    while (mainEl.firstChild) {
-        mainEl.removeChild(mainEl.firstChild);
-    }
-    phaseOne();
+    removeChildElements(mainEl);
+
 }
 
 function phaseOneHeading() {
@@ -109,7 +120,14 @@ function showPrompts() {
     for (var i = 0; i < quiz[askQuestion].prompts.length; i++) {
         buttonEl = document.createElement("button");
         buttonEl.classList.add("prompt");
+        buttonEl.setAttribute('value', quiz[askQuestion].prompts[i]);
         buttonEl.textContent = (i + 1) + ". " + quiz[askQuestion].prompts[i]
         theQuizEl.append(buttonEl);
+    }
+}
+function removeChildElements(targetEl) {
+
+    while (targetEl.firstChild) {
+        targetEl.removeChild(targetEl.firstChild);
     }
 }
