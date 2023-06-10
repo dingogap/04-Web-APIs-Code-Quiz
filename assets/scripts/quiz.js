@@ -15,7 +15,7 @@ var quiz = [
         answer: "all of the above",
     },
     {
-        question: "String values must be enclosed witin ______ when being assigned to variables.",
+        question: "String values must be enclosed within ______ when being assigned to variables.",
         prompts: ["commas", "curly brackets", "quotes", "parentheses"],
         answer: "quotes",
     },

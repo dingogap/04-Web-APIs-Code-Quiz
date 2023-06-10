@@ -35,12 +35,13 @@ function phaseTwo() {
         var element = event.target;
         // Checks if element is a button
         if (element.matches("button") === true) {
-            // Get its data-index value and remove the todo element from the list
+
             if (element.value != quiz[askQuestion].answer) {
                 timerCount = timerCount - 15;
                 if (timerCount <= 0) {
                     clearInterval(timer);
                     newHighScore = 0;
+                    timerEl.textContent =0;
                     phaseThree();
                 }
 
@@ -133,18 +134,18 @@ function showPrompts() {
     }
 }
 function removeChildElements(targetEl) {
-
     while (targetEl.firstChild) {
         targetEl.removeChild(targetEl.firstChild);
     }
 }
 function allDone() {
     subHeadingEl = document.createElement("h3");
+    subHeadingEl.classList.add("results")
     subHeadingEl.textContent = "All done!";
-    mainEl.append(subHeadingEl);
+    theQuizEl.append(subHeadingEl);
 
     yourScoreEl = document.createElement("p");
     yourScoreEl.textContent = "Your score is " + newHighScore + "."
-    mainEl.append(yourScoreEl);
+    theQuizEl.append(yourScoreEl);
 
 }
