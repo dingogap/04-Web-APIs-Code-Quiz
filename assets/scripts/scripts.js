@@ -24,33 +24,33 @@ function phaseTwo() {
     timerEl.textContent = timerCount;
     startTimer();
 
-    askQuestion = 1;
+    askQuestion = 0;
     quizHolder();
     showQuestion();
     showPrompts();
 
-    theQuizEl.addEventListener("click", function(event) {
+    theQuizEl.addEventListener("click", function (event) {
         var element = event.target;
-      
+
         // Checks if element is a button
         if (element.matches("button") === true) {
-          // Get its data-index value and remove the todo element from the list
-          while (theQuizEl.firstChild) {
-            theQuizEl.removeChild(theQuizEl.firstChild);
+            // Get its data-index value and remove the todo element from the list
+            while (theQuizEl.firstChild) {
+                theQuizEl.removeChild(theQuizEl.firstChild);
+            }
+            askQuestion++;
+            showQuestion();
+            showPrompts();
         }
-          askQuestion++;
-         showQuestion();
-         showPrompts();
-        }
-      });    
+    });
 
 
 }
 
 function phaseThree() {
 
-    while (theQuizEl.firstChild) {
-        theQuizEl.removeChild(theQuizEl.firstChild);
+    while (mainEl.firstChild) {
+        mainEl.removeChild(mainEl.firstChild);
     }
     phaseOne();
 }
@@ -109,7 +109,7 @@ function showPrompts() {
     for (var i = 0; i < quiz[askQuestion].prompts.length; i++) {
         buttonEl = document.createElement("button");
         buttonEl.classList.add("prompt");
-        buttonEl.textContent = (i+1)+". "+quiz[askQuestion].prompts[i]
+        buttonEl.textContent = (i + 1) + ". " + quiz[askQuestion].prompts[i]
         theQuizEl.append(buttonEl);
     }
 }
