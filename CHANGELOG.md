@@ -37,6 +37,16 @@ Layout could be handled in different ways
 
 I'll use this Challenge to better understand using the DOM. I'll use JS to add/remove the HTML as the quiz progresses as practice.
 
+## Process
+1. Created folder structure & empty files
+2. Created quiz.js to hold questions and runtime timers
+3. created base css in style.css
+4. started building js control code
+5. phaseOne completed
+6. phaseTwo core started
+7. phaseThree function defined
+
+
 
 
 

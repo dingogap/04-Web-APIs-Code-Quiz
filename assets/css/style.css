@@ -1,0 +1,77 @@
+/* CSS Variables */
+:root {
+    --light-patch: #755b9a;
+    --dark-patch: #3f2664;
+    --dark-text: #000000;
+    --light-text: #ffffff;
+}
+
+/* Base Settings */
+* {
+    box-sizing: border-box;
+    /* margin: 0; */
+}
+
+body {
+    font-size: 1em;
+    font-family: Arial, Helvetica, sans-serif;
+    color: var(--dark-text);
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.highscores {
+    color: var(--light-patch);
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    margin-top: 19px;
+    width: 65%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+h1 {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.instructions {
+    text-align: center;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.start-button {
+    background-color: var(--light-patch);
+    color: var(--light-text);
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+}
+
+.framework {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    text-align: center;
+}
+
+.questions {
+
+}
+
+.prompt {
+width: fit-content;
+background-color: var(--light-patch);
+color: var(--light-text);
+}
