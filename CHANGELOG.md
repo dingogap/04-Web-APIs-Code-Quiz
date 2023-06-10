@@ -51,6 +51,7 @@ I'll use this Challenge to better understand using the DOM. I'll use JS to add/r
 11. created function to remove all child elements of a parent
 12. added check if question answered & aply penalty if wrong
 13. added code to stop timer when all answers are correct, all answers are wrong or time has run out
+14. added phaseThree heading and score message
 
 
 

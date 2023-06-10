@@ -6,6 +6,7 @@ var subHeadingEl;
 var buttonEl;
 var timerEl;
 var theQuizEl;
+var yourScoreEl;
 var quiz;
 var newHighScore;
 
@@ -26,7 +27,7 @@ function phaseTwo() {
     startTimer();
 
     askQuestion = 0;
-    quizHolder();
+    frameWork();
     showQuestion();
     showPrompts();
 
@@ -53,6 +54,11 @@ function phaseTwo() {
                 showQuestion();
                 showPrompts();
             } else {
+                if (timerCount > 0) {
+                    newHighScore = timerCount;
+                } else {
+                    newHighScore = 0;
+                };
                 clearInterval(timer);
                 phaseThree();
             }
@@ -63,8 +69,9 @@ function phaseTwo() {
 }
 
 function phaseThree() {
-
     removeChildElements(mainEl);
+    frameWork();
+    allDone();
 
 }
 
@@ -102,7 +109,7 @@ function startTimer() {
     }, 1000);
 }
 
-function quizHolder() {
+function frameWork() {
     theQuizEl = document.createElement("div");
     theQuizEl.classList.add("framework");
     mainEl.append(theQuizEl)
@@ -130,4 +137,14 @@ function removeChildElements(targetEl) {
     while (targetEl.firstChild) {
         targetEl.removeChild(targetEl.firstChild);
     }
+}
+function allDone() {
+    subHeadingEl = document.createElement("h3");
+    subHeadingEl.textContent = "All done!";
+    mainEl.append(subHeadingEl);
+
+    yourScoreEl = document.createElement("p");
+    yourScoreEl.textContent = "Your score is " + newHighScore + "."
+    mainEl.append(yourScoreEl);
+
 }
