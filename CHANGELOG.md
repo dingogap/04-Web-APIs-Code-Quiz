@@ -45,6 +45,8 @@ I'll use this Challenge to better understand using the DOM. I'll use JS to add/r
 5. phaseOne completed
 6. phaseTwo core started
 7. phaseThree function defined
+8. added countdown timer for quiz
+9. added click event to change multi-choice answers 
 
 
 

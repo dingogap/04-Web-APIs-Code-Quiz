@@ -20,13 +20,30 @@ function phaseTwo() {
     headingEl.remove();
     subHeadingEl.remove();
     buttonEl.remove();
-    timerEl.textContent = quizTimer.runtime;
+    timerCount = quizTimer.runtime;
+    timerEl.textContent = timerCount;
+    startTimer();
 
     askQuestion = 1;
     quizHolder();
     showQuestion();
     showPrompts();
-    /* phaseThree(); */
+
+    theQuizEl.addEventListener("click", function(event) {
+        var element = event.target;
+      
+        // Checks if element is a button
+        if (element.matches("button") === true) {
+          // Get its data-index value and remove the todo element from the list
+          while (theQuizEl.firstChild) {
+            theQuizEl.removeChild(theQuizEl.firstChild);
+        }
+          askQuestion++;
+         showQuestion();
+         showPrompts();
+        }
+      });    
+
 
 }
 
@@ -57,6 +74,21 @@ function phaseOneButton() {
     buttonEl.textContent = "Start Quiz"
     buttonEl.addEventListener("click", phaseTwo);
     mainEl.append(buttonEl);
+}
+
+function startTimer() {
+    timer = setInterval(function () {
+        timerEl.textContent = timerCount;
+        timerCount--
+        timerEl.textContent = timerCount;
+        if (timerCount > 0) {
+
+        } else {
+            clearInterval(timer);
+            phaseThree();
+        }
+
+    }, 1000);
 }
 
 function quizHolder() {
