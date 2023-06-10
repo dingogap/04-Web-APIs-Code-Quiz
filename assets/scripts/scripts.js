@@ -9,6 +9,7 @@ var theQuizEl;
 var yourScoreEl;
 var quiz;
 var newHighScore;
+var inputEl;
 
 phaseOne();
 
@@ -41,7 +42,7 @@ function phaseTwo() {
                 if (timerCount <= 0) {
                     clearInterval(timer);
                     newHighScore = 0;
-                    timerEl.textContent =0;
+                    timerEl.textContent = 0;
                     phaseThree();
                 }
 
@@ -73,7 +74,6 @@ function phaseThree() {
     removeChildElements(mainEl);
     frameWork();
     allDone();
-
 }
 
 function phaseOneHeading() {
@@ -139,13 +139,37 @@ function removeChildElements(targetEl) {
     }
 }
 function allDone() {
-    subHeadingEl = document.createElement("h3");
-    subHeadingEl.classList.add("results")
-    subHeadingEl.textContent = "All done!";
-    theQuizEl.append(subHeadingEl);
+    showResult()
+    inputInitials();
 
-    yourScoreEl = document.createElement("p");
-    yourScoreEl.textContent = "Your score is " + newHighScore + "."
-    theQuizEl.append(yourScoreEl);
 
+
+    function showResult() {
+        subHeadingEl = document.createElement("h3");
+        subHeadingEl.classList.add("results")
+        subHeadingEl.textContent = "All done!";
+        theQuizEl.append(subHeadingEl);
+
+        yourScoreEl = document.createElement("p");
+        yourScoreEl.textContent = "Your score is " + newHighScore + "."
+        theQuizEl.append(yourScoreEl);
+    }
+
+    function inputInitials() {
+        yourScoreEl = document.createElement("p");
+        yourScoreEl.textContent = "Enter initials: "
+        theQuizEl.append(yourScoreEl);
+        
+        inputEl = document.createElement("input");
+        inputEl.setAttribute('type', 'text');
+        inputEl.setAttribute('class', 'results');
+        inputEl.setAttribute('maxlength', '3');
+        inputEl.setAttribute('onkeyup', 'this.value = this.value.toUpperCase();');
+        yourScoreEl.append(inputEl);
+
+        buttonEl = document.createElement("button");
+        buttonEl.setAttribute('class', 'results-button');
+        buttonEl.textContent = "Submit";
+        yourScoreEl.append(buttonEl);
+    }
 }

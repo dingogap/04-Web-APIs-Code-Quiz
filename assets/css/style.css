@@ -76,10 +76,16 @@ h1 {
     width: fit-content;
     background-color: var(--light-patch);
     color: var(--light-text);
-    justify-content: flex-start;
+    /* justify-content: flex-start; */
 
 }
 
 .results {
     text-align: left;
+}
+
+.results-button {
+    background-color: var(--light-patch);
+    color: var(--light-text);
+    margin-left: 5px;
 }

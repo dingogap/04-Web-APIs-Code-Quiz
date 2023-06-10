@@ -53,6 +53,7 @@ I'll use this Challenge to better understand using the DOM. I'll use JS to add/r
 13. added code to stop timer when all answers are correct, all answers are wrong or time has run out
 14. added phaseThree heading and score message
 15. styled phaseThree heading and score message
+16. added and styled input field and submit button - force uppercase and maximum 3 characters
 
 
 
