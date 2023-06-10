@@ -38,6 +38,7 @@ function phaseTwo() {
             if (element.value != quiz[askQuestion].answer) {
                 timerCount = timerCount - 15;
                 if (timerCount <= 0) {
+                    clearInterval(timer);
                     newHighScore = 0;
                     phaseThree();
                 }
@@ -52,6 +53,7 @@ function phaseTwo() {
                 showQuestion();
                 showPrompts();
             } else {
+                clearInterval(timer);
                 phaseThree();
             }
         }
@@ -92,9 +94,7 @@ function startTimer() {
         timerEl.textContent = timerCount;
         timerCount--
         timerEl.textContent = timerCount;
-        if (timerCount > 0) {
-
-        } else {
+        if (timerCount <= 0) {
             clearInterval(timer);
             phaseThree();
         }
