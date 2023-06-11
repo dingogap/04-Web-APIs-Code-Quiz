@@ -12,11 +12,15 @@ var quiz;
 var newHighScore;
 var inputEl;
 var currentPhase;
+var savedScores;
+var quizScores="quizScores";
 
 phaseOne();
 
 function phaseOne() {
     currentPhase = "phaseOne";
+    leagueTable = JSON.parse(localStorage.getItem(quizScores));
+
     phaseOneHeading();
     phaseOneInstructions();
     phaseOneButton();
@@ -70,8 +74,10 @@ function phaseTwo() {
             } else {
                 if (timerCount > 0) {
                     newHighScore = timerCount;
+                    timerEl.textContent = timerCount;
                 } else {
                     newHighScore = 0;
+                    timerEl.textContent = 0;
                 };
                 clearInterval(timer);
                 phaseThree();
@@ -212,7 +218,8 @@ function inputInitials() {
 
 
 function updateHighScores() {
-
+    leagueTable=[[newHighScore, inputEl.value]],
+localStorage.setItem(quizScores, JSON.stringify(leagueTable));
     console.log("update scores here");
 }
 

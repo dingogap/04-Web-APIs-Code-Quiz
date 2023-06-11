@@ -56,6 +56,7 @@ I'll use this Challenge to better understand using the DOM. I'll use JS to add/r
 16. added and styled input field and submit button - force uppercase and maximum 3 characters
 17. add function to force initials to upper case
 18. styled buttons for hover on mouse-over
+19. added code to use local storage to save and retrieve league table data
 
 
 
