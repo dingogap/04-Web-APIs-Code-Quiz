@@ -54,6 +54,7 @@ I'll use this Challenge to better understand using the DOM. I'll use JS to add/r
 14. added phaseThree heading and score message
 15. styled phaseThree heading and score message
 16. added and styled input field and submit button - force uppercase and maximum 3 characters
+17. add function to force initials to upper case
 
 
 

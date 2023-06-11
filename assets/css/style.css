@@ -25,6 +25,7 @@ header {
 
 .highscores {
     color: var(--light-patch);
+    cursor: pointer;
 }
 
 main {
@@ -45,7 +46,7 @@ h1 {
     text-align: center;
 }
 
- .instructions {
+.instructions {
     text-align: center;
     width: fit-content;
     margin-left: auto;
@@ -80,7 +81,7 @@ h1 {
 
 }
 
-.results {
+#results {
     text-align: left;
 }
 
@@ -88,4 +89,8 @@ h1 {
     background-color: var(--light-patch);
     color: var(--light-text);
     margin-left: 5px;
+}
+
+.mouse-over {
+    cursor: pointer;
 }
