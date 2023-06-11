@@ -54,7 +54,7 @@ h1 {
 }
 
 .start-button {
-    background-color: var(--light-patch);
+    background-color: var(--dark-patch);
     color: var(--light-text);
     margin-left: auto;
     margin-right: auto;
@@ -75,7 +75,7 @@ h1 {
 
 .prompt {
     width: fit-content;
-    background-color: var(--light-patch);
+    background-color: var(--dark-patch);
     color: var(--light-text);
     /* justify-content: flex-start; */
 
@@ -86,11 +86,15 @@ h1 {
 }
 
 .results-button {
-    background-color: var(--light-patch);
+    background-color: var(--dark-patch);
     color: var(--light-text);
     margin-left: 5px;
 }
 
 .mouse-over {
     cursor: pointer;
+}
+
+.mouse-over:hover {
+    background-color: var(--light-patch);
 }
