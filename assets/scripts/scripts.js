@@ -311,22 +311,23 @@ function showHighScores() {
 function ShowHSButtons() {
 
     scoreListDiv = document.createElement("div");
+    scoreListDiv.setAttribute('id', 'hs-button-holder');
     theQuizEl.append(scoreListDiv);
 
 
     buttonEl = document.createElement("button");
-    buttonEl.classList.add("start-button");
+    buttonEl.classList.add("hs-button");
     buttonEl.classList.add("mouse-over");
     buttonEl.textContent = "Go Back"
     buttonEl.addEventListener("click", phaseOne);
-    mainEl.append(buttonEl);
+    scoreListDiv.append(buttonEl);
 
     buttonEl = document.createElement("button");
-    buttonEl.classList.add("start-button");
+    buttonEl.classList.add("hs-button");
     buttonEl.classList.add("mouse-over");
     buttonEl.textContent = "Clear Highscores"
     buttonEl.addEventListener("click", clearHighScores);
-    mainEl.append(buttonEl);
+    scoreListDiv.append(buttonEl);
 
 }
 

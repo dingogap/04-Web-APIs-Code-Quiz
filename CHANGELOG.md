@@ -61,6 +61,7 @@ I'll use this Challenge to better understand using the DOM. I'll use JS to add/r
     * I tried to use splice but couldn't get it to work with the 2D array I'm using
     * Instead the code loops through the leagueTable & inserts the new sore as soon as its higher than the one its compared too. The code handles lowest and highest new scores too. This tiny bit has been the hardest to solve 
 21. added code to display high score and added Go Back and Clear High Score buttons    
+22 styled high score buttons
 
 
 
