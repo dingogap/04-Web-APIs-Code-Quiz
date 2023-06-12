@@ -14,6 +14,7 @@ var inputEl;
 var currentPhase;
 var savedScores;
 var quizScores = "quizScores";
+var rightOrWrong;
 
 phaseOne();
 
@@ -43,7 +44,7 @@ function phaseTwo() {
     timerCount = quizTimer.runtime;
     timerEl.textContent = timerCount;
     askQuestion = 0;
-
+    removeChildElements(mainEl);
     startTimer();
     frameWork();
     showHeading(quiz[askQuestion].question);
@@ -62,7 +63,9 @@ function phaseTwo() {
                     timerEl.textContent = 0;
                     phaseThree();
                 }
-
+                rightOrWrong="Wrong!";
+            } else {
+                rightOrWrong="Correct!";
             }
 
             while (theQuizEl.firstChild) {
@@ -169,7 +172,18 @@ function showPrompts() {
         buttonEl.textContent = (i + 1) + ". " + quiz[askQuestion].prompts[i]
         theQuizEl.append(buttonEl);
     }
+    messageEl = document.createElement("div");
+    messageEl.classList.add("message");
+    theQuizEl.append( messageEl);
+    answerBreaKEl=document.createElement("hr");
+    messageEl.append(answerBreaKEl);
+    answerEl=document.createElement("p");
+    answerEl.classList.add("right-wrong");
+    messageEl.append(answerEl);
+    answerEl.textContent=rightOrWrong;
+
 }
+
 function removeChildElements(targetEl) {
     while (targetEl.firstChild) {
         targetEl.removeChild(targetEl.firstChild);
@@ -292,12 +306,12 @@ function checkValidInput(initialCounter) {
 function showHighScores() {
 
     leagueTable = JSON.parse(localStorage.getItem(quizScores));
-    if (leagueTable!= null) {
+    if (leagueTable != null) {
 
-    scoreListEl = document.createElement("ol");
-    scoreListEl.setAttribute('id', 'score-list');
-    scoreListEl.setAttribute('reversed', 'true');
-    theQuizEl.append(scoreListEl);
+        scoreListEl = document.createElement("ol");
+        scoreListEl.setAttribute('id', 'score-list');
+        scoreListEl.setAttribute('reversed', 'true');
+        theQuizEl.append(scoreListEl);
 
 
         for (let i = leagueTable.length - 1; i >= 0; i--) {
@@ -333,7 +347,7 @@ function ShowHSButtons() {
 
 function clearHighScores() {
     localStorage.removeItem(quizScores);
-    leagueTable="";
-    removeChildElements( scoreListEl)
+    leagueTable = "";
+    removeChildElements(scoreListEl)
     showHighScores()
 }
