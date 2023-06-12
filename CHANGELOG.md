@@ -70,7 +70,8 @@ I'll use this Challenge to better understand using the DOM. I'll use JS to add/r
 21. added code to display high score and added Go Back and Clear High Score buttons    
 22 styled high score buttons
 23. added code to display Correct or Wrong after answer is submitted
-24. added isses resulting from using a tiny .gif as the only guide to the project
+24. added issues resulting from using a tiny .gif as the only guide to the project
+25. added timer to control how long the result msg is displayed
 
 
 

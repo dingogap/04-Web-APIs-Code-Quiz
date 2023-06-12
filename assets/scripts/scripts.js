@@ -26,6 +26,7 @@ function phaseOne() {
     phaseOneHeading();
     phaseOneInstructions();
     phaseOneButton();
+    rightOrWrong="";
     highscoresEl.addEventListener("click", function (event) {
         var element = event.target;
         if (element.classList.contains("highscores")) {
@@ -63,11 +64,13 @@ function phaseTwo() {
                     timerEl.textContent = 0;
                     phaseThree();
                 }
+                
                 rightOrWrong="Wrong!";
             } else {
                 rightOrWrong="Correct!";
             }
-
+            msgTimerCount = 2;
+            MsgTimer();
             while (theQuizEl.firstChild) {
                 theQuizEl.removeChild(theQuizEl.firstChild);
             }
@@ -149,6 +152,18 @@ function startTimer() {
     }, 1000);
 }
 
+function MsgTimer() {
+    msgtimer = setInterval(function () {
+        
+        msgTimerCount--;
+        
+        if (msgTimerCount<=0) {
+            clearInterval(msgtimer);
+            answerEl.textContent="";
+        }
+    }, 1000);
+}
+
 function frameWork() {
     theQuizEl = document.createElement("div");
     theQuizEl.classList.add("framework");
@@ -196,8 +211,6 @@ function allDone() {
 
 
 function showResult() {
-
-
     yourScoreEl = document.createElement("p");
     yourScoreEl.textContent = "Your score is " + newHighScore + "."
     theQuizEl.append(yourScoreEl);
