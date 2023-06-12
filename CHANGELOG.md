@@ -15,6 +15,13 @@ There are 3 interesting issues with this assignment.
 2. Storing persistant data - results
 3. Code - html, css & js 
 
+## Issues
+1. The .gif file is so small it is difficult to see some things clearly.
+2. There is nothing to indicate the size of the screen being used
+3. There is nothing to indicate the scale and how it compares to reality
+4. There is nothing to say whether the View Highscores link is active while the Quiz is running
+5. If the View Highscores link is active during a quiz where does the Go Back button go to? 
+
 The Code Quiz workflow is:
 1. Show instructions
 2. Run quiz
@@ -63,6 +70,7 @@ I'll use this Challenge to better understand using the DOM. I'll use JS to add/r
 21. added code to display high score and added Go Back and Clear High Score buttons    
 22 styled high score buttons
 23. added code to display Correct or Wrong after answer is submitted
+24. added isses resulting from using a tiny .gif as the only guide to the project
 
 
 
