@@ -1,5 +1,6 @@
 /* CSS Variables */
 :root {
+    --pale-patch: #f1eaf7;
     --light-patch: #755b9a;
     --dark-patch: #3f2664;
     --dark-text: #000000;
@@ -77,8 +78,6 @@ h1 {
     width: fit-content;
     background-color: var(--dark-patch);
     color: var(--light-text);
-    /* justify-content: flex-start; */
-
 }
 
 .results {
@@ -97,4 +96,11 @@ h1 {
 
 .mouse-over:hover {
     background-color: var(--light-patch);
+}
+#score-list {
+    list-style-type: decimal;
+    background-color: var(--pale-patch);
+}
+#score-list li {
+    font-size: .9em;
 }

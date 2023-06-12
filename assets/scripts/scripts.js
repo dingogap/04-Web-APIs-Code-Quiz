@@ -9,7 +9,7 @@ var timerEl;
 var theQuizEl;
 var yourScoreEl;
 var quiz;
-var newHighScore=0;
+var newHighScore = 0;
 var inputEl;
 var currentPhase;
 var savedScores;
@@ -20,7 +20,8 @@ phaseOne();
 function phaseOne() {
     currentPhase = "phaseOne";
     leagueTable = JSON.parse(localStorage.getItem(quizScores));
-
+    removeChildElements(mainEl);
+    frameWork();
     phaseOneHeading();
     phaseOneInstructions();
     phaseOneButton();
@@ -98,6 +99,7 @@ function phaseThree() {
     currentPhase = "phaseThree";
     removeChildElements(mainEl);
     frameWork();
+    showHeading("All done!");
     allDone();
 }
 
@@ -106,6 +108,8 @@ function phaseFour() {
     removeChildElements(mainEl);
     frameWork();
     showHeading("Highscores");
+    showHighScores();
+    ShowHSButtons();
 }
 
 function phaseOneHeading() {
@@ -178,7 +182,7 @@ function allDone() {
 
 
 function showResult() {
-    showHeading("All done!");
+
 
     yourScoreEl = document.createElement("p");
     yourScoreEl.textContent = "Your score is " + newHighScore + "."
@@ -255,6 +259,7 @@ function updateHighScores() {
 
 
     localStorage.setItem(quizScores, JSON.stringify(newLeagueTable));
+    leagueTable = newLeagueTable;
 
 }
 
@@ -282,4 +287,52 @@ function checkValidInput(initialCounter) {
         }
     }
 
+}
+
+function showHighScores() {
+
+    leagueTable = JSON.parse(localStorage.getItem(quizScores));
+    if (leagueTable!= null) {
+
+    scoreListEl = document.createElement("ol");
+    scoreListEl.setAttribute('id', 'score-list');
+    scoreListEl.setAttribute('reversed', 'true');
+    theQuizEl.append(scoreListEl);
+
+
+        for (let i = leagueTable.length - 1; i >= 0; i--) {
+            scoreListItemEl = document.createElement("li");
+            scoreListItemEl.textContent = [leagueTable[i][1] + " - " + leagueTable[i][0]];
+            scoreListEl.append(scoreListItemEl)
+        }
+    }
+}
+
+function ShowHSButtons() {
+
+    scoreListDiv = document.createElement("div");
+    theQuizEl.append(scoreListDiv);
+
+
+    buttonEl = document.createElement("button");
+    buttonEl.classList.add("start-button");
+    buttonEl.classList.add("mouse-over");
+    buttonEl.textContent = "Go Back"
+    buttonEl.addEventListener("click", phaseOne);
+    mainEl.append(buttonEl);
+
+    buttonEl = document.createElement("button");
+    buttonEl.classList.add("start-button");
+    buttonEl.classList.add("mouse-over");
+    buttonEl.textContent = "Clear Highscores"
+    buttonEl.addEventListener("click", clearHighScores);
+    mainEl.append(buttonEl);
+
+}
+
+function clearHighScores() {
+    localStorage.removeItem(quizScores);
+    leagueTable="";
+    removeChildElements( scoreListEl)
+    showHighScores()
 }
