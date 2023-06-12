@@ -9,11 +9,11 @@ var timerEl;
 var theQuizEl;
 var yourScoreEl;
 var quiz;
-var newHighScore;
+var newHighScore=0;
 var inputEl;
 var currentPhase;
 var savedScores;
-var quizScores="quizScores";
+var quizScores = "quizScores";
 
 phaseOne();
 
@@ -41,11 +41,11 @@ function phaseTwo() {
     buttonEl.remove();
     timerCount = quizTimer.runtime;
     timerEl.textContent = timerCount;
-    startTimer();
-
     askQuestion = 0;
+
+    startTimer();
     frameWork();
-    showQuestion();
+    showHeading(quiz[askQuestion].question);
     showPrompts();
 
     theQuizEl.addEventListener("click", function (event) {
@@ -54,7 +54,7 @@ function phaseTwo() {
         if (element.classList.contains("prompt")) {
 
             if (element.value != quiz[askQuestion].answer) {
-                timerCount = timerCount - 15;
+                timerCount = timerCount - quizTimer.penalty;
                 if (timerCount <= 0) {
                     clearInterval(timer);
                     newHighScore = 0;
@@ -69,16 +69,22 @@ function phaseTwo() {
             }
             askQuestion++;
             if (askQuestion < quiz.length) {
-                showQuestion();
-                showPrompts();
+                if (timerCount > 0) {
+                    showHeading(quiz[askQuestion].question);
+                    showPrompts();
+                } else {
+                    newHighScore = 0;
+                    phaseThree();
+                }
             } else {
                 if (timerCount > 0) {
                     newHighScore = timerCount;
-                    timerEl.textContent = timerCount;
+                    /* timerEl.textContent = timerCount; */
                 } else {
                     newHighScore = 0;
                     timerEl.textContent = 0;
                 };
+                timerEl.textContent = timerCount;
                 clearInterval(timer);
                 phaseThree();
             }
@@ -99,7 +105,7 @@ function phaseFour() {
     currentPhase = "phaseFour";
     removeChildElements(mainEl);
     frameWork();
-    console.log("boo");
+    showHeading("Highscores");
 }
 
 function phaseOneHeading() {
@@ -133,7 +139,6 @@ function startTimer() {
             clearInterval(timer);
             phaseThree();
         }
-
     }, 1000);
 }
 
@@ -144,10 +149,10 @@ function frameWork() {
 
 }
 
-function showQuestion() {
+function showHeading(heading) {
     subHeadingEl = document.createElement("h3");
-    subHeadingEl.classList.add("questions")
-    subHeadingEl.textContent = quiz[askQuestion].question;
+    subHeadingEl.classList.add("results");
+    subHeadingEl.textContent = heading;
     theQuizEl.append(subHeadingEl);
 }
 
@@ -173,10 +178,7 @@ function allDone() {
 
 
 function showResult() {
-    subHeadingEl = document.createElement("h3");
-    subHeadingEl.classList.add("results")
-    subHeadingEl.textContent = "All done!";
-    theQuizEl.append(subHeadingEl);
+    showHeading("All done!");
 
     yourScoreEl = document.createElement("p");
     yourScoreEl.textContent = "Your score is " + newHighScore + "."
@@ -208,7 +210,6 @@ function inputInitials() {
             if (inputEl.value === "") {
                 window.alert("Please enter you initials to continue");
             } else {
-                console.log(inputEl.value);
                 updateHighScores();
                 phaseFour();
             }
@@ -217,10 +218,44 @@ function inputInitials() {
 }
 
 
+
 function updateHighScores() {
-    leagueTable=[[newHighScore, inputEl.value]],
-localStorage.setItem(quizScores, JSON.stringify(leagueTable));
-    console.log("update scores here");
+    // First quiz - create leagueTable array
+    newScoreAdded = false;
+    if (leagueTable === null) {
+        newLeagueTable = [];
+        newLeagueTable.push([newHighScore, inputEl.value]);
+        newScoreAdded = true;
+    } else {
+        newLeagueTable = []
+        updated = false;
+        let j = leagueTable.length;
+        for (let i = 0; i < j; i++) {
+            if (leagueTable[i][0] < newHighScore) {
+                newLeagueTable.push([leagueTable[i][0], leagueTable[i][1]]);
+
+            } else {
+                if (updated === true) {
+                    newLeagueTable.push([leagueTable[i][0], leagueTable[i][1]]);
+
+                } else {
+                    newLeagueTable.push([newHighScore, inputEl.value]);
+                    newLeagueTable.push([leagueTable[i][0], leagueTable[i][1]]);
+                    updated = true;
+                    newScoreAdded = true;
+
+                }
+            }
+        }
+        if (newScoreAdded === false) {
+            newLeagueTable.push([newHighScore, inputEl.value]);
+        }
+
+    }
+
+
+    localStorage.setItem(quizScores, JSON.stringify(newLeagueTable));
+
 }
 
 function checkValidInput(initialCounter) {

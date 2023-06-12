@@ -28,5 +28,5 @@ var quiz = [
 
 var quizTimer = {
     runtime: 75,
-    penalty: 15,
+    penalty: 10,
 };
