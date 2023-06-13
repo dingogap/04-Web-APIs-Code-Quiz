@@ -248,46 +248,12 @@ function inputInitials() {
     });
 }
 
-
-
 function updateHighScores() {
-    // First quiz - create leagueTable array
-    newScoreAdded = false;
-    if (leagueTable === null) {
-        newLeagueTable = [];
-        newLeagueTable.push([newHighScore, inputEl.value]);
-        newScoreAdded = true;
-    } else {
-        newLeagueTable = []
-        updated = false;
-        let j = leagueTable.length;
-        for (let i = 0; i < j; i++) {
-            if (leagueTable[i][0] < newHighScore) {
-                newLeagueTable.push([leagueTable[i][0], leagueTable[i][1]]);
-
-            } else {
-                if (updated === true) {
-                    newLeagueTable.push([leagueTable[i][0], leagueTable[i][1]]);
-
-                } else {
-                    newLeagueTable.push([newHighScore, inputEl.value]);
-                    newLeagueTable.push([leagueTable[i][0], leagueTable[i][1]]);
-                    updated = true;
-                    newScoreAdded = true;
-
-                }
-            }
-        }
-        if (newScoreAdded === false) {
-            newLeagueTable.push([newHighScore, inputEl.value]);
-        }
-
-    }
-
-
-    localStorage.setItem(quizScores, JSON.stringify(newLeagueTable));
-    leagueTable = newLeagueTable;
-
+    leagueTable.push([newHighScore, inputEl.value]);
+    leagueTable.sort(function(a, b) {
+        return a[0] - b[0];
+    });
+    localStorage.setItem(quizScores, JSON.stringify(leagueTable));
 }
 
 function checkValidInput(initialCounter) {
@@ -327,7 +293,7 @@ function showHighScores() {
         theQuizEl.append(scoreListEl);
 
 
-        for (let i = leagueTable.length - 1; i >= 0; i--) {
+        for (let i = leagueTable.length-1 ; i > -1; i--) {
             scoreListItemEl = document.createElement("li");
             scoreListItemEl.textContent = [leagueTable[i][1] + " - " + leagueTable[i][0]];
             scoreListEl.append(scoreListItemEl)

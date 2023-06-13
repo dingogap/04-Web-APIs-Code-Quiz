@@ -72,7 +72,7 @@ I'll use this Challenge to better understand using the DOM. I'll use JS to add/r
 23. added code to display Correct or Wrong after answer is submitted
 24. added issues resulting from using a tiny .gif as the only guide to the project
 25. added timer to control how long the result msg is displayed
-
+26. replaced procedural sort code I wrote with .sort method with compare so sort Highscores
 
 
 
