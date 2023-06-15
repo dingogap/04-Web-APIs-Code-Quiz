@@ -5,6 +5,8 @@
     --dark-patch: #3f2664;
     --dark-text: #000000;
     --light-text: #ffffff;
+    --result-text: grey;
+    --result-hr: lightgrey;
 }
 
 /* Base Settings */
@@ -129,8 +131,12 @@ h1 {
 
 .right-wrong {
     font-style: italic;
+    color: var(--result-text);
 }
 
 hr {
     margin-top: 20px;
+    height: 5px;
+    background-color: var(--result-hr);
+    border: none;
 }

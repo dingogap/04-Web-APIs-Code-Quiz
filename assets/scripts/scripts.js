@@ -1,4 +1,4 @@
-// Header Elenments
+// Globals
 var bodyEl;
 var headerEl;
 var highScoresEl;
@@ -8,6 +8,7 @@ var mainEl;
 var theQuizEl;
 var rightOrWrong;
 var leagueTable;
+var msgTimer;
 
 var newHighScore = 0;
 var currentPhase = "prolog";
@@ -25,7 +26,7 @@ function init() {
 
     // Create View Highscores link
     highScoresEl = document.createElement("span");
-    highScoresEl.setAttribute("id", "highscores")
+    highScoresEl.setAttribute("id", "highscores");
     /* highScoresEl.classList.add("mouse-over"); */
     highScoresEl.textContent = "View HighScores";
     headerEl.append(highScoresEl);
@@ -45,12 +46,12 @@ function init() {
 
     theQuizEl = document.createElement("div");
     theQuizEl.classList.add("framework");
-    mainEl.append(theQuizEl)
+    mainEl.append(theQuizEl);
 
     // Add click event to display the list of high scores
     highScoresEl.addEventListener("click", function (event) {
         var element = event.target;
-        if (element.id = ("highscores")) {
+        if ((element.id = "highscores")) {
             phaseFour();
         }
     });
@@ -70,79 +71,92 @@ function phaseOne() {
 
 function phaseTwo() {
     // Run the Quiz
+    // Uses a Click Event to record the answer and move on to the next question
+    // Prevents a very fast click sequence by ignoring extra clicks before the question is answered
+    // Aborts the click event when all questions have been answered to prevent the event handler asking a nonexistant question
     currentPhase = "phaseTwo";
     removeChildElements(theQuizEl);
     timerCount = quizTimer.runtime;
     timerEl.textContent = timerCount;
     askQuestion = 0;
+    // Show the first Question and Prompts
     startTimer();
     showHeading(quiz[askQuestion].question);
     showPrompts();
+    // Click controls
     alreadyRunning = false;
     const controller = new AbortController();
-    theQuizEl.addEventListener("click", function (event) {
-        var element = event.target;
-        // Checks if element is a button
-        if (element.classList.contains("prompt")) {
-            if (alreadyRunning === false) {
-                alreadyRunning = true;
-                if (askQuestion < quiz.length) {
-                    if (element.value === quiz[askQuestion].answer) {
-                        rightOrWrong = "Correct!";
-                    } else {
-                        rightOrWrong = "Wrong!";
-                        timerCount = timerCount - quizTimer.penalty;
-                    };
-                     MsgTimer(quizTimer.message)
-                    askQuestion++
-                    if (askQuestion >= quiz.length) {
-                        controller.abort();
-                        newHighScore = timerCount;
-                        timerEl.textContent = timerCount;
-                        clearInterval(countdownTimer);
-                        
-                        phaseThree();
-                    } else {
-
-
-                        while (theQuizEl.firstChild) {
-                            theQuizEl.removeChild(theQuizEl.firstChild);
+    theQuizEl.addEventListener(
+        "click",
+        function (event) {
+            var element = event.target;
+            // Checks if element is a button
+            if (element.classList.contains("prompt")) {
+                if (alreadyRunning === false) {
+                    alreadyRunning = true;
+                    if (askQuestion < quiz.length) {
+                        if (element.value === quiz[askQuestion].answer) {
+                            rightOrWrong = "Correct!";
+                        } else {
+                            rightOrWrong = "Wrong!";
+                            timerCount = timerCount - quizTimer.penalty;
                         }
-                        showHeading(quiz[askQuestion].question);
-                        showPrompts();
+                        // If a question has been answered quickly reset the msg timer so only 1 runs at a time
+                        if (msgTimer != null) {
+                            clearInterval(msgtimer);
+                        }
+                        // Displpay the result forom the previous question
+                        MsgTimer(quizTimer.message);
+                        askQuestion++;
+                        if (askQuestion >= quiz.length) {
+                            controller.abort();
+                            goToPhaseThree();
+                        } else {
+                            // Display te next question
+                            while (theQuizEl.firstChild) {
+                                theQuizEl.removeChild(theQuizEl.firstChild);
+                            }
+                            showHeading(quiz[askQuestion].question);
+                            showPrompts();
+                        }
+                    } else {
+                        goToPhaseThree();
                     }
-
-                } else {
-                    newHighScore = timerCount;
-                    timerEl.textContent = timerCount;
-                    clearInterval(countdownTimer);
-                    phaseThree();
                 }
+                alreadyRunning = false;
             }
-            alreadyRunning = false;
-        }
-    }, { signal: controller.signal });
+        },
+        { signal: controller.signal }
+    );
+}
+function goToPhaseThree() {
+    newHighScore = timerCount;
+    timerEl.textContent = timerCount;
+    clearInterval(countdownTimer);
+    phaseThree();
 }
 
 function phaseThree() {
+    // Record the Quiz Result
     currentPhase = "phaseThree";
     removeChildElements(theQuizEl);
     console.log(currentPhase);
     leagueTable = readLeagueTable();
     showHeading("All done!");
-    showResult()
+    showResult();
     inputInitials();
     showRightOrWrong();
 }
 
 function phaseFour() {
+    // Show the Highscores 
     currentPhase = "phaseFour";
     removeChildElements(theQuizEl);
     console.log(currentPhase);
     leagueTable = readLeagueTable();
     showHeading("Highscores");
     showHighScores();
-    ShowHSButtons();
+    showHSButtons();
 }
 
 function removeChildElements(targetEl) {
@@ -153,15 +167,16 @@ function removeChildElements(targetEl) {
 }
 function phaseOneHeading() {
     headingEl = document.createElement("h1");
-    headingEl.textContent = "Coding Quiz Challenge"
+    headingEl.textContent = "Coding Quiz Challenge";
     theQuizEl.append(headingEl);
 }
 
 function phaseOneInstructions() {
     // Show Quiz Instructions
     subHeadingEl = document.createElement("h3");
-    subHeadingEl.classList.add("instructions")
-    subHeadingEl.textContent = "Try to answer the following code-related questions within the time limit. Keep in mind that incorrect answers will penalise your score/time by ten seconds!"
+    subHeadingEl.classList.add("instructions");
+    subHeadingEl.textContent =
+        "Try to answer the following code-related questions within the time limit. Keep in mind that incorrect answers will penalise your score/time by ten seconds!";
     theQuizEl.append(subHeadingEl);
 }
 
@@ -169,7 +184,7 @@ function phaseOneButton() {
     buttonEl = document.createElement("button");
     buttonEl.classList.add("start-button");
     buttonEl.classList.add("mouse-over");
-    buttonEl.textContent = "Start Quiz"
+    buttonEl.textContent = "Start Quiz";
     buttonEl.addEventListener("click", phaseTwo);
     theQuizEl.append(buttonEl);
 }
@@ -178,7 +193,7 @@ function startTimer() {
     // Start the Quiz Countdown Timier
     countdownTimer = setInterval(function () {
         timerEl.textContent = timerCount;
-        timerCount--
+        timerCount--;
         timerEl.textContent = timerCount;
         if (timerCount <= 0) {
             newHighScore = 0;
@@ -202,8 +217,8 @@ function showPrompts() {
         buttonEl = document.createElement("button");
         buttonEl.classList.add("prompt");
         buttonEl.classList.add("mouse-over");
-        buttonEl.setAttribute('value', quiz[askQuestion].prompts[i]);
-        buttonEl.textContent = (i + 1) + ". " + quiz[askQuestion].prompts[i]
+        buttonEl.setAttribute("value", quiz[askQuestion].prompts[i]);
+        buttonEl.textContent = i + 1 + ". " + quiz[askQuestion].prompts[i];
         theQuizEl.append(buttonEl);
     }
     // No result can be shown until after the 1st queston has been answered
@@ -225,7 +240,7 @@ function showRightOrWrong() {
     answerEl.textContent = rightOrWrong;
 }
 
-function MsgTimer( msgDisplayTime) {
+function MsgTimer(msgDisplayTime) {
     // Display the result message for 2 seconds & then remove
     msgtimer = setInterval(function () {
         msgDisplayTime--;
@@ -244,26 +259,26 @@ function readLeagueTable() {
 function showResult() {
     // Show the final score when all questions have been answered
     yourScoreEl = document.createElement("p");
-    yourScoreEl.textContent = "Your score is " + newHighScore + "."
+    yourScoreEl.textContent = "Your score is " + newHighScore + ".";
     theQuizEl.append(yourScoreEl);
 }
 
 function inputInitials() {
     // Ask for Initals (upper case, limited to 3)
     yourScoreEl = document.createElement("p");
-    yourScoreEl.textContent = "Enter initials: "
+    yourScoreEl.textContent = "Enter initials: ";
     theQuizEl.append(yourScoreEl);
-
+    // Create Input Field for initials
     inputEl = document.createElement("input");
-    inputEl.setAttribute('type', 'text');
-    inputEl.setAttribute('id', 'results');
-    inputEl.setAttribute('maxlength', '3');
-    inputEl.setAttribute('onkeyup', 'checkValidInput()');
+    inputEl.setAttribute("type", "text");
+    inputEl.setAttribute("id", "results");
+    inputEl.setAttribute("maxlength", "3");
+    inputEl.setAttribute("onkeyup", "checkValidInput()");
     yourScoreEl.append(inputEl);
-
+    // Create Submit button
     buttonEl = document.createElement("button");
-    buttonEl.setAttribute('class', 'results-button');
-    buttonEl.classList.add('mouse-over');
+    buttonEl.setAttribute("class", "results-button");
+    buttonEl.classList.add("mouse-over");
     buttonEl.textContent = "Submit";
     yourScoreEl.append(buttonEl);
 
@@ -275,7 +290,7 @@ function inputInitials() {
                 window.alert("Please enter you initials to continue");
             } else {
                 updateHighScores();
-                timerEl.textContent=0;
+                timerEl.textContent = 0;
                 phaseFour();
             }
         }
@@ -288,7 +303,7 @@ function updateHighScores() {
     // The array is sorted numerically via the sort method and the compare function.
     // The compare function checks the values of the the 1st element which holds the scores
     if (leagueTable === null) {
-        leagueTable = [[newHighScore, inputEl.value.toUpperCase()]]
+        leagueTable = [[newHighScore, inputEl.value.toUpperCase()]];
     } else {
         leagueTable.push([newHighScore, inputEl.value.toUpperCase()]);
         leagueTable.sort(function (a, b) {
@@ -303,8 +318,12 @@ function checkValidInput(initialCounter) {
     // Convert lowercase alpha to uppercase
     // Ignore non-alphas
 
-    var lowercase = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",];
-    var uppercase = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",];
+    var lowercase = [
+        "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",
+    ];
+    var uppercase = [
+        "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
+    ];
     let char = document.getElementById("results");
     initialPosition = char.value.length - 1;
     initial = char.value.charAt(initialPosition);
@@ -324,50 +343,51 @@ function checkValidInput(initialCounter) {
 }
 
 function showHighScores() {
-
+    // List the high scores sorted from high to low
+    // Scores are sorted as they are entered
+    // Scores are read froom local storage as required
     leagueTable = JSON.parse(localStorage.getItem(quizScores));
     if (leagueTable != null) {
-
         scoreListEl = document.createElement("ol");
-        scoreListEl.setAttribute('id', 'score-list');
-        scoreListEl.setAttribute('reversed', 'true');
+        scoreListEl.setAttribute("id", "score-list");
         theQuizEl.append(scoreListEl);
-
-
         for (let i = leagueTable.length - 1; i > -1; i--) {
             scoreListItemEl = document.createElement("li");
-            scoreListItemEl.textContent = [leagueTable[i][1] + " - " + leagueTable[i][0]];
-            scoreListEl.append(scoreListItemEl)
+            scoreListItemEl.textContent = [
+                leagueTable[i][1] + " - " + leagueTable[i][0],
+            ];
+            scoreListEl.append(scoreListItemEl);
         }
     }
 }
 
-function ShowHSButtons() {
-
+function showHSButtons() {
+    // Show the Go Back & Clear Highscores Button
     scoreListDiv = document.createElement("div");
-    scoreListDiv.setAttribute('id', 'hs-button-holder');
+    scoreListDiv.setAttribute("id", "hs-button-holder");
     theQuizEl.append(scoreListDiv);
-
-
+    //Go Back button
     buttonEl = document.createElement("button");
     buttonEl.classList.add("hs-button");
     buttonEl.classList.add("mouse-over");
-    buttonEl.textContent = "Go Back"
+    buttonEl.textContent = "Go Back";
     buttonEl.addEventListener("click", phaseOne);
     scoreListDiv.append(buttonEl);
-
+    // Clear Highscores button
     buttonEl = document.createElement("button");
     buttonEl.classList.add("hs-button");
     buttonEl.classList.add("mouse-over");
-    buttonEl.textContent = "Clear Highscores"
+    buttonEl.textContent = "Clear Highscores";
     buttonEl.addEventListener("click", clearHighScores);
     scoreListDiv.append(buttonEl);
-
 }
 
 function clearHighScores() {
+    // Delete Highscores from local storage
+    // Clear the leagueTable
+    // Clear the Highscores from the page and call the function to show the scores
     localStorage.removeItem(quizScores);
     leagueTable = "";
-    removeChildElements(scoreListEl)
-    showHighScores()
+    removeChildElements(scoreListEl);
+    showHighScores();
 }
