@@ -112,7 +112,7 @@ function phaseTwo() {
                             controller.abort();
                             goToPhaseThree();
                         } else {
-                            // Display te next question
+                            // Display the next question
                             while (theQuizEl.firstChild) {
                                 theQuizEl.removeChild(theQuizEl.firstChild);
                             }
@@ -241,7 +241,7 @@ function showRightOrWrong() {
 }
 
 function MsgTimer(msgDisplayTime) {
-    // Display the result message for 2 seconds & then remove
+    // Display the result message for a period & then remove
     msgtimer = setInterval(function () {
         msgDisplayTime--;
         if (msgDisplayTime <= 0) {

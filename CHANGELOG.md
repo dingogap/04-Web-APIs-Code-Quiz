@@ -74,7 +74,8 @@ I'll use this Challenge to better understand using the DOM. I'll use JS to add/r
 25. added timer to control how long the result msg is displayed
 26. replaced procedural sort code I wrote with .sort method with compare so sort Highscores
 27. updated phaseTwo to stop multiple events and abort the controlled when all questions asked
-28. styled Results Msg and HR and updated comments 
+28. styled Results Msg and HR and updated comments
+29. added media query so page works on a phone
 
 
 
