@@ -1,134 +1,168 @@
-var headerEl = document.querySelector("header");
-var highscoresEl = document.querySelector(".highscores");
-var mainEl = document.querySelector("main");
-var timerEl = document.querySelector(".count-down");
-var headingEl;
-var subHeadingEl;
-var buttonEl;
+// Header Elenments
+var bodyEl;
+var headerEl;
+var highScoresEl;
+var headerDivEl;
 var timerEl;
+var mainEl;
 var theQuizEl;
-var yourScoreEl;
-var quiz;
-var newHighScore = 0;
-var inputEl;
-var currentPhase;
-var savedScores;
-var quizScores = "quizScores";
 var rightOrWrong;
+var leagueTable;
 
-phaseOne();
+var newHighScore = 0;
+var currentPhase = "prolog";
+var quizScores = "quizScores";
+
+init();
+
+function init() {
+    // Builds the framework for the Quiz
+    bodyEl = document.querySelector("body");
+
+    // Create header element
+    headerEl = document.createElement("header");
+    bodyEl.prepend(headerEl);
+
+    // Create View Highscores link
+    highScoresEl = document.createElement("span");
+    highScoresEl.setAttribute("id", "highscores")
+    /* highScoresEl.classList.add("mouse-over"); */
+    highScoresEl.textContent = "View HighScores";
+    headerEl.append(highScoresEl);
+
+    // Create Countdown Timer
+    var headerDivEl = document.createElement("div");
+    headerDivEl.textContent = "Time: ";
+    headerEl.append(headerDivEl);
+    timerEl = document.createElement("span");
+    timerEl.classList.add("count-down");
+    timerEl.textContent = newHighScore;
+    headerDivEl.append(timerEl);
+
+    // Create main element
+    mainEl = document.createElement("main");
+    headerEl.insertAdjacentElement("afterend", mainEl);
+
+    theQuizEl = document.createElement("div");
+    theQuizEl.classList.add("framework");
+    mainEl.append(theQuizEl)
+
+    // Add click event to display the list of high scores
+    highScoresEl.addEventListener("click", function (event) {
+        var element = event.target;
+        if (element.id = ("highscores")) {
+            phaseFour();
+        }
+    });
+
+    // Start the Quiz
+    phaseOne();
+}
 
 function phaseOne() {
+    // Show the Quiz Instructions
     currentPhase = "phaseOne";
-    leagueTable = JSON.parse(localStorage.getItem(quizScores));
-    removeChildElements(mainEl);
-    frameWork();
+    removeChildElements(theQuizEl);
     phaseOneHeading();
     phaseOneInstructions();
     phaseOneButton();
-    rightOrWrong="";
-    highscoresEl.addEventListener("click", function (event) {
-        var element = event.target;
-        if (element.classList.contains("highscores")) {
-            phaseFour();
-        }
-
-    });
-
 }
 
 function phaseTwo() {
+    // Run the Quiz
     currentPhase = "phaseTwo";
-    headingEl.remove();
-    subHeadingEl.remove();
-    buttonEl.remove();
+    removeChildElements(theQuizEl);
     timerCount = quizTimer.runtime;
     timerEl.textContent = timerCount;
     askQuestion = 0;
-    removeChildElements(mainEl);
     startTimer();
-    frameWork();
     showHeading(quiz[askQuestion].question);
     showPrompts();
-
+    alreadyRunning = false;
+    const controller = new AbortController();
     theQuizEl.addEventListener("click", function (event) {
         var element = event.target;
         // Checks if element is a button
         if (element.classList.contains("prompt")) {
+            if (alreadyRunning === false) {
+                alreadyRunning = true;
+                if (askQuestion < quiz.length) {
+                    if (element.value === quiz[askQuestion].answer) {
+                        rightOrWrong = "Correct!";
+                    } else {
+                        rightOrWrong = "Wrong!";
+                        timerCount = timerCount - quizTimer.penalty;
+                    };
+                     MsgTimer(quizTimer.message)
+                    askQuestion++
+                    if (askQuestion >= quiz.length) {
+                        controller.abort();
+                        newHighScore = timerCount;
+                        timerEl.textContent = timerCount;
+                        clearInterval(countdownTimer);
+                        
+                        phaseThree();
+                    } else {
 
-            if (element.value != quiz[askQuestion].answer) {
-                timerCount = timerCount - quizTimer.penalty;
-                if (timerCount <= 0) {
-                    clearInterval(timer);
-                    newHighScore = 0;
-                    timerEl.textContent = 0;
-                    phaseThree();
-                }
-                
-                rightOrWrong="Wrong!";
-            } else {
-                rightOrWrong="Correct!";
-            }
-            msgTimerCount = 2;
-            MsgTimer();
-            while (theQuizEl.firstChild) {
-                theQuizEl.removeChild(theQuizEl.firstChild);
-            }
-            askQuestion++;
-            if (askQuestion < quiz.length) {
-                if (timerCount > 0) {
-                    showHeading(quiz[askQuestion].question);
-                    showPrompts();
+
+                        while (theQuizEl.firstChild) {
+                            theQuizEl.removeChild(theQuizEl.firstChild);
+                        }
+                        showHeading(quiz[askQuestion].question);
+                        showPrompts();
+                    }
+
                 } else {
-                    newHighScore = 0;
-                    phaseThree();
-                }
-            } else {
-                if (timerCount > 0) {
                     newHighScore = timerCount;
-                    /* timerEl.textContent = timerCount; */
-                } else {
-                    newHighScore = 0;
-                    timerEl.textContent = 0;
-                };
-                timerEl.textContent = timerCount;
-                clearInterval(timer);
-                phaseThree();
+                    timerEl.textContent = timerCount;
+                    clearInterval(countdownTimer);
+                    phaseThree();
+                }
             }
+            alreadyRunning = false;
         }
-    });
-
-
+    }, { signal: controller.signal });
 }
 
 function phaseThree() {
     currentPhase = "phaseThree";
-    removeChildElements(mainEl);
-    frameWork();
+    removeChildElements(theQuizEl);
+    console.log(currentPhase);
+    leagueTable = readLeagueTable();
     showHeading("All done!");
-    allDone();
+    showResult()
+    inputInitials();
+    showRightOrWrong();
 }
 
 function phaseFour() {
     currentPhase = "phaseFour";
-    removeChildElements(mainEl);
-    frameWork();
+    removeChildElements(theQuizEl);
+    console.log(currentPhase);
+    leagueTable = readLeagueTable();
     showHeading("Highscores");
     showHighScores();
     ShowHSButtons();
 }
 
+function removeChildElements(targetEl) {
+    // Delete old elements to make space for new ones
+    while (targetEl.firstChild) {
+        targetEl.removeChild(targetEl.firstChild);
+    }
+}
 function phaseOneHeading() {
     headingEl = document.createElement("h1");
     headingEl.textContent = "Coding Quiz Challenge"
-    mainEl.append(headingEl);
+    theQuizEl.append(headingEl);
 }
 
 function phaseOneInstructions() {
+    // Show Quiz Instructions
     subHeadingEl = document.createElement("h3");
     subHeadingEl.classList.add("instructions")
     subHeadingEl.textContent = "Try to answer the following code-related questions within the time limit. Keep in mind that incorrect answers will penalise your score/time by ten seconds!"
-    mainEl.append(subHeadingEl);
+    theQuizEl.append(subHeadingEl);
 }
 
 function phaseOneButton() {
@@ -137,41 +171,25 @@ function phaseOneButton() {
     buttonEl.classList.add("mouse-over");
     buttonEl.textContent = "Start Quiz"
     buttonEl.addEventListener("click", phaseTwo);
-    mainEl.append(buttonEl);
+    theQuizEl.append(buttonEl);
 }
 
 function startTimer() {
-    timer = setInterval(function () {
+    // Start the Quiz Countdown Timier
+    countdownTimer = setInterval(function () {
         timerEl.textContent = timerCount;
         timerCount--
         timerEl.textContent = timerCount;
         if (timerCount <= 0) {
-            clearInterval(timer);
+            newHighScore = 0;
+            clearInterval(countdownTimer);
             phaseThree();
         }
     }, 1000);
 }
 
-function MsgTimer() {
-    msgtimer = setInterval(function () {
-        
-        msgTimerCount--;
-        
-        if (msgTimerCount<=0) {
-            clearInterval(msgtimer);
-            answerEl.textContent="";
-        }
-    }, 1000);
-}
-
-function frameWork() {
-    theQuizEl = document.createElement("div");
-    theQuizEl.classList.add("framework");
-    mainEl.append(theQuizEl)
-
-}
-
 function showHeading(heading) {
+    // Show Headings or Questions in phaseTwo
     subHeadingEl = document.createElement("h3");
     subHeadingEl.classList.add("results");
     subHeadingEl.textContent = heading;
@@ -179,6 +197,7 @@ function showHeading(heading) {
 }
 
 function showPrompts() {
+    // Show Possible Answers
     for (var i = 0; i < quiz[askQuestion].prompts.length; i++) {
         buttonEl = document.createElement("button");
         buttonEl.classList.add("prompt");
@@ -187,36 +206,50 @@ function showPrompts() {
         buttonEl.textContent = (i + 1) + ". " + quiz[askQuestion].prompts[i]
         theQuizEl.append(buttonEl);
     }
-    messageEl = document.createElement("div");
-    messageEl.classList.add("message");
-    theQuizEl.append( messageEl);
-    answerBreaKEl=document.createElement("hr");
-    messageEl.append(answerBreaKEl);
-    answerEl=document.createElement("p");
-    answerEl.classList.add("right-wrong");
-    messageEl.append(answerEl);
-    answerEl.textContent=rightOrWrong;
-
-}
-
-function removeChildElements(targetEl) {
-    while (targetEl.firstChild) {
-        targetEl.removeChild(targetEl.firstChild);
+    // No result can be shown until after the 1st queston has been answered
+    if (askQuestion > 0) {
+        showRightOrWrong();
     }
 }
-function allDone() {
-    showResult()
-    inputInitials();
+
+function showRightOrWrong() {
+    // Show the result from the provious question
+    messageEl = document.createElement("div");
+    messageEl.classList.add("message");
+    theQuizEl.append(messageEl);
+    answerBreaKEl = document.createElement("hr");
+    messageEl.append(answerBreaKEl);
+    answerEl = document.createElement("p");
+    answerEl.classList.add("right-wrong");
+    messageEl.append(answerEl);
+    answerEl.textContent = rightOrWrong;
 }
 
+function MsgTimer( msgDisplayTime) {
+    // Display the result message for 2 seconds & then remove
+    msgtimer = setInterval(function () {
+        msgDisplayTime--;
+        if (msgDisplayTime <= 0) {
+            clearInterval(msgtimer);
+            removeChildElements(messageEl);
+        }
+    }, 1000);
+}
+
+function readLeagueTable() {
+    // Reads highscores from local storage
+    return JSON.parse(localStorage.getItem(quizScores));
+}
 
 function showResult() {
+    // Show the final score when all questions have been answered
     yourScoreEl = document.createElement("p");
     yourScoreEl.textContent = "Your score is " + newHighScore + "."
     theQuizEl.append(yourScoreEl);
 }
 
 function inputInitials() {
+    // Ask for Initals (upper case, limited to 3)
     yourScoreEl = document.createElement("p");
     yourScoreEl.textContent = "Enter initials: "
     theQuizEl.append(yourScoreEl);
@@ -242,6 +275,7 @@ function inputInitials() {
                 window.alert("Please enter you initials to continue");
             } else {
                 updateHighScores();
+                timerEl.textContent=0;
                 phaseFour();
             }
         }
@@ -249,10 +283,18 @@ function inputInitials() {
 }
 
 function updateHighScores() {
-    leagueTable.push([newHighScore, inputEl.value]);
-    leagueTable.sort(function(a, b) {
-        return a[0] - b[0];
-    });
+    // Update high scores & save to local storage
+    // The newest score array is pushed onto the array of scores
+    // The array is sorted numerically via the sort method and the compare function.
+    // The compare function checks the values of the the 1st element which holds the scores
+    if (leagueTable === null) {
+        leagueTable = [[newHighScore, inputEl.value.toUpperCase()]]
+    } else {
+        leagueTable.push([newHighScore, inputEl.value.toUpperCase()]);
+        leagueTable.sort(function (a, b) {
+            return a[0] - b[0];
+        });
+    }
     localStorage.setItem(quizScores, JSON.stringify(leagueTable));
 }
 
@@ -267,7 +309,7 @@ function checkValidInput(initialCounter) {
     initialPosition = char.value.length - 1;
     initial = char.value.charAt(initialPosition);
 
-    // If NOT uppecase check if lowercase
+    // If NOT uppercase check if lowercase
     if (!uppercase.includes(initial)) {
         // If lowercase
         if (lowercase.includes(initial)) {
@@ -279,7 +321,6 @@ function checkValidInput(initialCounter) {
             char.value = char.value.substr(0, initialPosition);
         }
     }
-
 }
 
 function showHighScores() {
@@ -293,7 +334,7 @@ function showHighScores() {
         theQuizEl.append(scoreListEl);
 
 
-        for (let i = leagueTable.length-1 ; i > -1; i--) {
+        for (let i = leagueTable.length - 1; i > -1; i--) {
             scoreListItemEl = document.createElement("li");
             scoreListItemEl.textContent = [leagueTable[i][1] + " - " + leagueTable[i][0]];
             scoreListEl.append(scoreListItemEl)

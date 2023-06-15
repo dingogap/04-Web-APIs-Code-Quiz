@@ -24,9 +24,21 @@ header {
     justify-content: space-between;
 }
 
-.highscores {
+#highscores {
     color: var(--light-patch);
+    
+    padding: 0px 10px;
+    margin-left: 5px;
+}
+#highscores:hover {
+    background-color: var(--light-patch);
+    color: white;
     cursor: pointer;
+}
+
+.count-down {
+    padding: 5px 10px;
+    margin-right: 2px;
 }
 
 main {
@@ -36,7 +48,7 @@ main {
     align-content: center;
     align-items: center;
     margin-top: 19px;
-    width: 65%;
+    width: 80%;
     margin-left: auto;
     margin-right: auto;
 }
@@ -67,7 +79,7 @@ h1 {
     flex-direction: column;
     flex-shrink: 0;
     flex-wrap: nowrap;
-    width: 80%;
+    width: 75%;
 }
 
 .questions {
@@ -90,12 +102,10 @@ h1 {
     margin-left: 5px;
 }
 
-.mouse-over {
-    cursor: pointer;
-}
-
 .mouse-over:hover {
+    cursor: pointer;
     background-color: var(--light-patch);
+    color: white;
 }
 
 #score-list {
@@ -103,26 +113,24 @@ h1 {
     background-color: var(--pale-patch);
     padding-inline-start: 20px;
     margin-top: -5px;
-
 }
 
 #score-list li {
-    font-size: .9em;
-    
+    font-size: 0.9em;
 }
 
-#hs-button-holder {
+#hs-button-holder {}
 
-}
 .hs-button {
     background-color: var(--dark-patch);
     color: var(--light-text);
     margin-right: 5px;
-
 }
+
 .right-wrong {
     font-style: italic;
 }
+
 hr {
     margin-top: 20px;
 }
