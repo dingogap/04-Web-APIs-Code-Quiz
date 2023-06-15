@@ -274,13 +274,17 @@ function inputInitials() {
     inputEl.setAttribute("maxlength", "3");
     inputEl.setAttribute("onkeyup", "checkValidInput()");
     yourScoreEl.append(inputEl);
+    // Make sure the results field has focus quick entry
+    // and so the Enter Key event listener works
+    document.getElementById("results").focus();
     // Create Submit button
     buttonEl = document.createElement("button");
+    buttonEl.setAttribute("id", "submit");
     buttonEl.setAttribute("class", "results-button");
     buttonEl.classList.add("mouse-over");
     buttonEl.textContent = "Submit";
     yourScoreEl.append(buttonEl);
-
+    // Event Listener for Click
     buttonEl.addEventListener("click", function (event) {
         var element = event.target;
         // Checks if element is a button
@@ -294,6 +298,15 @@ function inputInitials() {
             }
         }
     });
+    // Event Listener for Enter Key
+    var pressEnter = document.getElementById("results");
+    pressEnter.addEventListener("keyup", function (event) {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            document.getElementById("submit").click();
+        }
+    });
+
 }
 
 function updateHighScores() {

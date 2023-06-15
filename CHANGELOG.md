@@ -77,6 +77,7 @@ I'll use this Challenge to better understand using the DOM. I'll use JS to add/r
 28. styled Results Msg and HR and updated comments
 29. added media query so page works on a phone
 30. added styling to buttons
+31. added Enter Key event listener to initials submit button 
 
 
 
