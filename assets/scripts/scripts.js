@@ -8,6 +8,7 @@ var mainEl;
 var theQuizEl;
 var rightOrWrong;
 var leagueTable;
+var countdownTimer;
 var msgTimer;
 
 var newHighScore = 0;
@@ -140,7 +141,6 @@ function phaseThree() {
     // Record the Quiz Result
     currentPhase = "phaseThree";
     removeChildElements(theQuizEl);
-    console.log(currentPhase);
     leagueTable = readLeagueTable();
     showHeading("All done!");
     showResult();
@@ -152,7 +152,6 @@ function phaseFour() {
     // Show the Highscores 
     currentPhase = "phaseFour";
     removeChildElements(theQuizEl);
-    console.log(currentPhase);
     leagueTable = readLeagueTable();
     showHeading("Highscores");
     showHighScores();
@@ -346,6 +345,10 @@ function showHighScores() {
     // List the high scores sorted from high to low
     // Scores are sorted as they are entered
     // Scores are read froom local storage as required
+    if (countdownTimer != null) {
+        clearInterval(countdownTimer);
+    }
+
     leagueTable = JSON.parse(localStorage.getItem(quizScores));
     if (leagueTable != null) {
         scoreListEl = document.createElement("ol");

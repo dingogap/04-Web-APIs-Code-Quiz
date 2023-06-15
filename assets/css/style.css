@@ -2,7 +2,7 @@
 :root {
     --pale-patch: #f1eaf7;
     --light-patch: #755b9a;
-    --dark-patch: #3f2664;
+    --dark-patch: #41226f;
     --dark-text: #000000;
     --light-text: #ffffff;
     --result-text: grey;
@@ -75,6 +75,7 @@ h1 {
     margin-left: auto;
     margin-right: auto;
     margin-top: 30px;
+    border-radius: 5px 5px;
 }
 
 .framework {
@@ -93,6 +94,8 @@ h1 {
     width: fit-content;
     background-color: var(--dark-patch);
     color: var(--light-text);
+    margin-top: 3px;
+    border-radius: 5px 5px;
 }
 
 .results {
@@ -103,6 +106,7 @@ h1 {
     background-color: var(--dark-patch);
     color: var(--light-text);
     margin-left: 5px;
+    border-radius: 5px 5px;
 }
 
 .mouse-over:hover {
@@ -128,6 +132,7 @@ h1 {
     background-color: var(--dark-patch);
     color: var(--light-text);
     margin-right: 5px;
+    border-radius: 5px 5px;
 }
 
 .right-wrong {
