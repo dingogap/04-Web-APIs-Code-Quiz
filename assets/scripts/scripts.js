@@ -127,7 +127,7 @@ function phaseFour() {
     removeChildElements(theQuizEl);
     removeChildElements(headerEl);
     leagueTable = readLeagueTable();
-    showHeading("Highscores");
+    showHeading("HighScores");
     timerEl.textContent = "";
     showHighScores();
     subHeadingEl.classList.add("hs-page");
@@ -415,7 +415,7 @@ function showHSButtons() {
     buttonEl.classList.add("hs-button");
     buttonEl.classList.add("mouse-over");
     buttonEl.classList.add("button");
-    buttonEl.textContent = "Clear Highscores";
+    buttonEl.textContent = "Clear HighScores";
     buttonEl.onclick = function () { clearHighScores() };
     /* buttonEl.addEventListener("click", clearHighScores); */
     scoreListDiv.append(buttonEl);

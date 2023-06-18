@@ -12,7 +12,7 @@ The Quiz itself is quite straight forward and has 4 distinct phases:
 ## Thinking Process & Structure
 I've used snippets of JS in websites I've built in the past but not really understood what was happening.
 
-I took this Challenge as an opportunity to to develop my knowledge of the Web APIs and the DOM and decided to use JavaScript to build and run the entire quiz. It would be a chance to do more with JavaScript and explore its functionality and really see how it works.
+I took this Challenge as an opportunity to develop my knowledge of the Web APIs and the DOM and decided to use JavaScript to build and run the entire quiz. It would be a chance to do more with JavaScript and explore its functionality and really see how it works.
 
 The entire quiz, including the HTML, is built and constructed in Javascript. I had to do the analysis first to know what would be required and then build the layout in HTML. Once that was done I could work out how to implement the quiz in JavaScript.
 
@@ -29,6 +29,59 @@ It was a very useful exercise and I think well worth the time.
 ## Data
 Quiz questions, promptsandf answers are stored in an object in the separate quiz.js source file. This file also stores the timelengths - quiz duration, penalty time and message display time.
 
+High Scores are stored in local storage in an array named quizScores. Each item in the quizScores array contains the score and intials for each recorded quiz score. The score and initials pairs are themselves 2 item arrays. The quizScores array is sorted by scores in the array items.  
+
 I used a separate file to separate the data from the code so questions and quiz timings could be changed without having to modify the quiz code. Extra questions could be added too.
 
+## Web APIS Code Quiz Website Link
+Click the link to visit the deployed wbsite: [Web APIs Quiz][def1].
 
+## Site Structure
+
+The Web APIs Quiz is a JavaScript app with 4 phases that run in a single webpage.
+1. Phase 1 - Introduction/Instructions
+2. Phase 2 - Multiple Choice Quesions (currently 5 but not linited by the application)
+3. Phase 3 - Score Recording
+4. Phase 4 - Displaying/Managing the High Scores
+
+## Navigation
+
+Phase One - Introduction
+![Web API Quiz Introduction](assets/websiteImages/phaseOneIntroduction.png)
+
+Phase Two - Question 3
+![Web API Quiz Question 3](assets/websiteImages/phaseTwoQuestionThree.png)
+
+Phase Three - Score Recording
+![Web API Quiz Introduction](assets/websiteImages/phaseThree-ScoreRecording.png)
+
+Phase Three - Erorr Message
+![Web API Quiz Error Message](assets/websiteImages/phaseThreeErrorMsg.png)
+
+Phase Four - Display HighScores
+![Web API Quiz Display HighScores](assets/websiteImages/phaseFourDisplayHighScores.png)
+
+Phase Four - Local Storage - quizScores Array
+![Web API Quiz Display HighScores](assets/websiteImages/phaseFourLocalStorage.png)
+
+## Changelog
+The development history is recorded in the [Changelog](./CHANGELOG.md).
+
+## Resources Used
+1. Bootcamp Materials - Lesson Material from Week 4
+2. Prior knowlege and experience
+3. Group tutorial sessions
+4. [MDM Web Docs][def2] addEventListener Method
+5. [MDM Web Docs][def3] removeEventListener Method
+6. [MDM Web Docs][def4] AbortSignal
+7. [MDM Web Docs][def5] setInterval() global function
+8. [MDM Web Docs][def6] Element:prepend() method
+9. [MDM Web Docs][def7] Array.prototype.sort()
+
+[def1]: https://dingogap.github.io/04-Web-APIs-Code-Quiz/
+[def2]: https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener
+[def3]: https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/removeEventListener
+[def4]: https://developer.mozilla.org/en-US/docs/Web/API/AbortSignal
+[def5]: https://developer.mozilla.org/en-US/docs/Web/API/setInterval
+[def6]: https://developer.mozilla.org/en-US/docs/Web/API/Element/prepend
+[def7]:https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
