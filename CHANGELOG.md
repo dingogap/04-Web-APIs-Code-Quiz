@@ -84,6 +84,7 @@ The Abort Controller didn't handle this situation and would not be made to.
 34. Changed addeventListeners to onclick events for all buttons except quiz prompts to reduce number of listeners
 34. Tested - OK! The removeEventListener method resolved the problem
 35. Highscores page was showing View Highscores link & Timer - removed and updated element creation flow
+36. adjusted highscores css
 
 
 

@@ -143,10 +143,11 @@ function buildHeader() {
     headerEl = document.createElement("header");
     bodyEl.prepend(headerEl);
     // Create View Highscores link
-    fillHeader();
+    highScoresLink();
 }
 
-function fillHeader() {
+function highScoresLink() {
+    // Build the highscores link element
     highScoresEl = document.createElement("span");
     highScoresEl.setAttribute("id", "highscores");
     highScoresEl.textContent = "View HighScores";
@@ -155,20 +156,20 @@ function fillHeader() {
 }
 
 function quizCountDownTimer() {
+    // Build the countdown timer element
     var headerDivEl = document.createElement("div");
     headerDivEl.textContent = "Time: ";
     headerEl.append(headerDivEl);
     timerEl = document.createElement("span");
     timerEl.classList.add("count-down");
-    /* timerEl.textContent = newHighScore; */
     timerEl.textContent = 0;
     headerDivEl.append(timerEl);
 }
 
 function buildFramework() {
+    // Build the framework to hold the quiz HTML elements the 
     mainEl = document.createElement("main");
     headerEl.insertAdjacentElement("afterend", mainEl);
-
     theQuizEl = document.createElement("div");
     theQuizEl.classList.add("framework");
     mainEl.append(theQuizEl);
@@ -428,7 +429,8 @@ function clearHighScores() {
 }
 
 function goBack() {
-    fillHeader();
+    // Reinitialise header elements after removing them for phaseFour 
+    highScoresLink();
     quizCountDownTimer();
     phaseOne();
 }
