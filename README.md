@@ -47,22 +47,22 @@ The Web APIs Quiz is a JavaScript app with 4 phases that run in a single webpage
 ## Navigation
 
 Phase One - Introduction
-![Web API Quiz Introduction](assets/websiteImages/phaseOneIntroduction.png)
+![Web API Quiz Introduction](assets/websiteimages/phaseOneIntroduction.png)
 
 Phase Two - Question 3
-![Web API Quiz Question 3](assets/websiteImages/phaseTwoQuestionThree.png)
+![Web API Quiz Question 3](assets/websiteimages/phaseTwoQuestionThree.png)
 
 Phase Three - Score Recording
-![Web API Quiz Introduction](assets/websiteImages/phaseThree-ScoreRecording.png)
+![Web API Quiz Introduction](assets/websiteimages/phaseThree-ScoreRecording.png)
 
 Phase Three - Erorr Message
-![Web API Quiz Error Message](assets/websiteImages/phaseThreeErrorMsg.png)
+![Web API Quiz Error Message](assets/websiteimages/phaseThreeErrorMsg.png)
 
 Phase Four - Display HighScores
-![Web API Quiz Display HighScores](assets/websiteImages/phaseFourDisplayHighScores.png)
+![Web API Quiz Display HighScores](assets/websiteimages/phaseFourDisplayHighScores.png)
 
 Phase Four - Local Storage - quizScores Array
-![Web API Quiz Display HighScores](assets/websiteImages/phaseFourLocalStorage.png)
+![Web API Quiz Display HighScores](assets/websiteimages/phaseFourLocalStorage.png)
 
 ## Changelog
 The development history is recorded in the [Changelog](./CHANGELOG.md).
