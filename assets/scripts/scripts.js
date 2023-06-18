@@ -18,45 +18,15 @@ var quizScores = "quizScores";
 init();
 
 function init() {
-    // Builds the framework for the Quiz
-    bodyEl = document.querySelector("body");
 
-    // Create header element
-    headerEl = document.createElement("header");
-    bodyEl.prepend(headerEl);
-
-    // Create View Highscores link
-    highScoresEl = document.createElement("span");
-    highScoresEl.setAttribute("id", "highscores");
-    /* highScoresEl.classList.add("mouse-over"); */
-    highScoresEl.textContent = "View HighScores";
-    headerEl.append(highScoresEl);
-
+    buildHeader()
     // Create Countdown Timer
-    var headerDivEl = document.createElement("div");
-    headerDivEl.textContent = "Time: ";
-    headerEl.append(headerDivEl);
-    timerEl = document.createElement("span");
-    timerEl.classList.add("count-down");
-    timerEl.textContent = newHighScore;
-    headerDivEl.append(timerEl);
+    quizCountDownTimer()
 
     // Create main element
-    mainEl = document.createElement("main");
-    headerEl.insertAdjacentElement("afterend", mainEl);
+    buildFramework()
 
-    theQuizEl = document.createElement("div");
-    theQuizEl.classList.add("framework");
-    mainEl.append(theQuizEl);
-
-    // Add click event to display the list of high scores
-    highScoresEl.addEventListener("click", function (event) {
-        var element = event.target;
-        if ((element.id = "highscores")) {
-            phaseFour();
-        }
-    });
-
+    alreadyRunning = false;
     // Start the Quiz
     phaseOne();
 }
@@ -74,7 +44,8 @@ function phaseTwo() {
     // Run the Quiz
     // Uses a Click Event to record the answer and move on to the next question
     // Prevents a very fast click sequence by ignoring extra clicks before the question is answered
-    // Aborts the click event when all questions have been answered to prevent the event handler asking a nonexistant question
+    // Removes the click event when all questions have been answered to prevent the event handler asking a nonexistant question
+    // This also prevents 2 event handlers running if the user starts the quiz & views highscores and restarts the quiz
     currentPhase = "phaseTwo";
     removeChildElements(theQuizEl);
     timerCount = quizTimer.runtime;
@@ -84,52 +55,56 @@ function phaseTwo() {
     startTimer();
     showHeading(quiz[askQuestion].question);
     showPrompts();
-    // Click controls
-    alreadyRunning = false;
-    const controller = new AbortController();
-    theQuizEl.addEventListener(
-        "click",
-        function (event) {
-            var element = event.target;
-            // Checks if element is a button
-            if (element.classList.contains("prompt")) {
-                if (alreadyRunning === false) {
-                    alreadyRunning = true;
-                    if (askQuestion < quiz.length) {
-                        if (element.value === quiz[askQuestion].answer) {
-                            rightOrWrong = "Correct!";
-                        } else {
-                            rightOrWrong = "Wrong!";
-                            timerCount = timerCount - quizTimer.penalty;
-                        }
-                        // If a question has been answered quickly reset the msg timer so only 1 runs at a time
-                        if (msgTimer != null) {
-                            clearInterval(msgtimer);
-                        }
-                        // Displpay the result forom the previous question
-                        MsgTimer(quizTimer.message);
-                        askQuestion++;
-                        if (askQuestion >= quiz.length) {
-                            controller.abort();
-                            goToPhaseThree();
-                        } else {
-                            // Display the next question
-                            while (theQuizEl.firstChild) {
-                                theQuizEl.removeChild(theQuizEl.firstChild);
-                            }
-                            showHeading(quiz[askQuestion].question);
-                            showPrompts();
-                        }
-                    } else {
-                        goToPhaseThree();
-                    }
-                }
-                alreadyRunning = false;
-            }
-        },
-        { signal: controller.signal }
-    );
+    // Click controls - makes sure there is only 1 event handler
+    if (alreadyRunning === false) {
+        theQuizEl.addEventListener("click", quizHandler);
+    }
 }
+
+function quizHandler(event) {
+    // checks quiz answers and then goes on to the next question
+    var element = event.target;
+    // Checks if element is a button
+    if (element.classList.contains("prompt")) {
+        if (alreadyRunning === false) {
+            alreadyRunning = true;
+            if (askQuestion < quiz.length) {
+                if (element.value === quiz[askQuestion].answer) {
+                    rightOrWrong = "Correct!";
+                } else {
+                    rightOrWrong = "Wrong!";
+                    timerCount = timerCount - quizTimer.penalty;
+                }
+                // If a question has been answered quickly reset the msg timer so only 1 runs at a time
+                if (msgTimer != null) {
+                    clearInterval(msgtimer);
+                }
+                // Display the result forom the previous question
+                MsgTimer(quizTimer.message);
+                askQuestion++;
+                if (askQuestion >= quiz.length) {
+                    theQuizEl.removeEventListener("click", quizHandler)
+                    goToPhaseThree();
+                } else {
+                    // Display the next question
+                    while (theQuizEl.firstChild) {
+                        theQuizEl.removeChild(theQuizEl.firstChild);
+                    }
+                    showHeading(quiz[askQuestion].question);
+                    showPrompts();
+                }
+            } else {
+                goToPhaseThree();
+            }
+        }
+        alreadyRunning = false;
+    }
+}
+
+
+
+
+
 function goToPhaseThree() {
     newHighScore = timerCount;
     timerEl.textContent = timerCount;
@@ -152,10 +127,51 @@ function phaseFour() {
     // Show the Highscores 
     currentPhase = "phaseFour";
     removeChildElements(theQuizEl);
+    removeChildElements(headerEl);
     leagueTable = readLeagueTable();
     showHeading("Highscores");
+    timerEl.textContent = "";
     showHighScores();
+    subHeadingEl.classList.add("hs-page");
     showHSButtons();
+}
+
+function buildHeader() {
+    // Builds the framework for the Quiz
+    bodyEl = document.querySelector("body");
+    // Create header element
+    headerEl = document.createElement("header");
+    bodyEl.prepend(headerEl);
+    // Create View Highscores link
+    fillHeader();
+}
+
+function fillHeader() {
+    highScoresEl = document.createElement("span");
+    highScoresEl.setAttribute("id", "highscores");
+    highScoresEl.textContent = "View HighScores";
+    highScoresEl.onclick = function () { phaseFour() };
+    headerEl.append(highScoresEl);
+}
+
+function quizCountDownTimer() {
+    var headerDivEl = document.createElement("div");
+    headerDivEl.textContent = "Time: ";
+    headerEl.append(headerDivEl);
+    timerEl = document.createElement("span");
+    timerEl.classList.add("count-down");
+    /* timerEl.textContent = newHighScore; */
+    timerEl.textContent = 0;
+    headerDivEl.append(timerEl);
+}
+
+function buildFramework() {
+    mainEl = document.createElement("main");
+    headerEl.insertAdjacentElement("afterend", mainEl);
+
+    theQuizEl = document.createElement("div");
+    theQuizEl.classList.add("framework");
+    mainEl.append(theQuizEl);
 }
 
 function removeChildElements(targetEl) {
@@ -184,7 +200,7 @@ function phaseOneButton() {
     buttonEl.classList.add("start-button");
     buttonEl.classList.add("mouse-over");
     buttonEl.textContent = "Start Quiz";
-    buttonEl.addEventListener("click", phaseTwo);
+    buttonEl.onclick = function () { phaseTwo() };
     theQuizEl.append(buttonEl);
 }
 
@@ -204,7 +220,7 @@ function startTimer() {
 
 function showHeading(heading) {
     // Show Headings or Questions in phaseTwo
-    subHeadingEl = document.createElement("h3");
+    subHeadingEl = document.createElement("h2");
     subHeadingEl.classList.add("results");
     subHeadingEl.textContent = heading;
     theQuizEl.append(subHeadingEl);
@@ -271,6 +287,7 @@ function inputInitials() {
     inputEl = document.createElement("input");
     inputEl.setAttribute("type", "text");
     inputEl.setAttribute("id", "results");
+    inputEl.setAttribute("class", "initials");
     inputEl.setAttribute("maxlength", "3");
     inputEl.setAttribute("onkeyup", "checkValidInput()");
     yourScoreEl.append(inputEl);
@@ -387,14 +404,16 @@ function showHSButtons() {
     buttonEl.classList.add("hs-button");
     buttonEl.classList.add("mouse-over");
     buttonEl.textContent = "Go Back";
-    buttonEl.addEventListener("click", phaseOne);
+    buttonEl.onclick = function () { goBack() };
+    /* buttonEl.addEventListener("click", phaseOne); */
     scoreListDiv.append(buttonEl);
     // Clear Highscores button
     buttonEl = document.createElement("button");
     buttonEl.classList.add("hs-button");
     buttonEl.classList.add("mouse-over");
     buttonEl.textContent = "Clear Highscores";
-    buttonEl.addEventListener("click", clearHighScores);
+    buttonEl.onclick = function () { clearHighScores() };
+    /* buttonEl.addEventListener("click", clearHighScores); */
     scoreListDiv.append(buttonEl);
 }
 
@@ -406,4 +425,10 @@ function clearHighScores() {
     leagueTable = "";
     removeChildElements(scoreListEl);
     showHighScores();
+}
+
+function goBack() {
+    fillHeader();
+    quizCountDownTimer();
+    phaseOne();
 }

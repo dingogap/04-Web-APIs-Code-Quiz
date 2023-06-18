@@ -77,7 +77,14 @@ I'll use this Challenge to better understand using the DOM. I'll use JS to add/r
 28. styled Results Msg and HR and updated comments
 29. added media query so page works on a phone
 30. added styling to buttons
-31. added Enter Key event listener to initials submit button 
+31. added Enter Key event listener to initials submit button
+32. Testing showed if user started the quiz, viwed high scores and restarted the quiz the quiz would jump 2 questions.
+The Abort Controller didn't handle this situation and would not be made to.
+33. Replace the Abort Controller with removeEventLeistener method and created a separate function for event handling
+34. Changed addeventListeners to onclick events for all buttons except quiz prompts to reduce number of listeners
+34. Tested - OK! The removeEventListener method resolved the problem
+35. Highscores page was showing View Highscores link & Timer - removed and updated element creation flow
+
 
 
 

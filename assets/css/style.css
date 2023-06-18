@@ -28,7 +28,6 @@ header {
 
 #highscores {
     color: var(--light-patch);
-
     padding: 0px 10px;
     margin-left: 5px;
 }
@@ -76,6 +75,7 @@ h1 {
     margin-right: auto;
     margin-top: 30px;
     border-radius: 5px 5px;
+    font-size: 16px;
 }
 
 .framework {
@@ -96,10 +96,12 @@ h1 {
     color: var(--light-text);
     margin-top: 3px;
     border-radius: 5px 5px;
+    font-size: 16px;
 }
 
 .results {
     text-align: left;
+    /* font-size: 16px; */
 }
 
 .results-button {
@@ -107,6 +109,7 @@ h1 {
     color: var(--light-text);
     margin-left: 5px;
     border-radius: 5px 5px;
+    font-size: 16px;
 }
 
 .mouse-over:hover {
@@ -118,7 +121,9 @@ h1 {
 #score-list {
     list-style-type: decimal;
     background-color: var(--pale-patch);
-    padding-inline-start: 20px;
+    padding-inline-start: 30px;
+    padding-top: 10px;
+    padding-bottom: 10px;
     margin-top: -5px;
 }
 
@@ -126,18 +131,24 @@ h1 {
     font-size: 0.9em;
 }
 
-#hs-button-holder {}
+.hs-page{
+    margin-top: 39px;
+}
 
 .hs-button {
     background-color: var(--dark-patch);
     color: var(--light-text);
     margin-right: 5px;
     border-radius: 5px 5px;
+    font-size: 16px;
 }
 
 .right-wrong {
     font-style: italic;
     color: var(--result-text);
+}
+.initials {
+    font-size: 16px;
 }
 
 hr {
