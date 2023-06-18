@@ -68,14 +68,17 @@ h1 {
     margin-right: auto;
 }
 
-.start-button {
+.button {
     background-color: var(--dark-patch);
     color: var(--light-text);
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 30px;
+    font-size: 1em;
+    margin-left: 5px;
     border-radius: 5px 5px;
-    font-size: 16px;
+}
+
+.start-button {
+    margin-left: auto;
+    margin-right: auto;   
 }
 
 .framework {
@@ -104,14 +107,6 @@ h1 {
     /* font-size: 16px; */
 }
 
-.results-button {
-    background-color: var(--dark-patch);
-    color: var(--light-text);
-    margin-left: 5px;
-    border-radius: 5px 5px;
-    font-size: 16px;
-}
-
 .mouse-over:hover {
     cursor: pointer;
     background-color: var(--light-patch);
@@ -138,20 +133,14 @@ h1 {
 margin-top: 5px;
 }
 
-.hs-button {
-    background-color: var(--dark-patch);
-    color: var(--light-text);
-    margin-right: 5px;
-    border-radius: 5px 5px;
-    font-size: 16px;
-}
+
 
 .right-wrong {
     font-style: italic;
     color: var(--result-text);
 }
 .initials {
-    font-size: 16px;
+    font-size: 1em;
 }
 
 hr {

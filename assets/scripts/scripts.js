@@ -10,6 +10,7 @@ var rightOrWrong;
 var leagueTable;
 var countdownTimer;
 var msgTimer;
+var msgDisplayTime;
 
 var newHighScore = 0;
 var currentPhase = "prolog";
@@ -18,7 +19,7 @@ var quizScores = "quizScores";
 init();
 
 function init() {
-
+    // Setup for 1st run through phaseOne
     buildHeader()
     // Create Countdown Timer
     quizCountDownTimer()
@@ -79,7 +80,7 @@ function quizHandler(event) {
                 if (msgTimer != null) {
                     clearInterval(msgtimer);
                 }
-                // Display the result forom the previous question
+                // Display the result from the previous question
                 MsgTimer(quizTimer.message);
                 askQuestion++;
                 if (askQuestion >= quiz.length) {
@@ -101,11 +102,8 @@ function quizHandler(event) {
     }
 }
 
-
-
-
-
 function goToPhaseThree() {
+    // Setup for phaseThree & call it
     newHighScore = timerCount;
     timerEl.textContent = timerCount;
     clearInterval(countdownTimer);
@@ -182,6 +180,7 @@ function removeChildElements(targetEl) {
     }
 }
 function phaseOneHeading() {
+    // Create the phaseOne Heading
     headingEl = document.createElement("h1");
     headingEl.textContent = "Coding Quiz Challenge";
     theQuizEl.append(headingEl);
@@ -197,8 +196,10 @@ function phaseOneInstructions() {
 }
 
 function phaseOneButton() {
+    // SBuild the Start Button
     buttonEl = document.createElement("button");
     buttonEl.classList.add("start-button");
+    buttonEl.classList.add("button");
     buttonEl.classList.add("mouse-over");
     buttonEl.textContent = "Start Quiz";
     buttonEl.onclick = function () { phaseTwo() };
@@ -260,7 +261,7 @@ function MsgTimer(msgDisplayTime) {
     // Display the result message for a period & then remove
     msgtimer = setInterval(function () {
         msgDisplayTime--;
-        if (msgDisplayTime <= 0) {
+        if (msgDisplayTime < 0) {
             clearInterval(msgtimer);
             removeChildElements(messageEl);
         }
@@ -299,6 +300,7 @@ function inputInitials() {
     buttonEl = document.createElement("button");
     buttonEl.setAttribute("id", "submit");
     buttonEl.setAttribute("class", "results-button");
+    buttonEl.classList.add("button");
     buttonEl.classList.add("mouse-over");
     buttonEl.textContent = "Submit";
     yourScoreEl.append(buttonEl);
@@ -324,7 +326,6 @@ function inputInitials() {
             document.getElementById("submit").click();
         }
     });
-
 }
 
 function updateHighScores() {
@@ -404,6 +405,7 @@ function showHSButtons() {
     buttonEl = document.createElement("button");
     buttonEl.classList.add("hs-button");
     buttonEl.classList.add("mouse-over");
+    buttonEl.classList.add("button");
     buttonEl.textContent = "Go Back";
     buttonEl.onclick = function () { goBack() };
     /* buttonEl.addEventListener("click", phaseOne); */
@@ -412,6 +414,7 @@ function showHSButtons() {
     buttonEl = document.createElement("button");
     buttonEl.classList.add("hs-button");
     buttonEl.classList.add("mouse-over");
+    buttonEl.classList.add("button");
     buttonEl.textContent = "Clear Highscores";
     buttonEl.onclick = function () { clearHighScores() };
     /* buttonEl.addEventListener("click", clearHighScores); */
@@ -429,7 +432,8 @@ function clearHighScores() {
 }
 
 function goBack() {
-    // Reinitialise header elements after removing them for phaseFour 
+    // Reinitialise header elements after removing them for phaseFour
+    // Call phaseOne
     highScoresLink();
     quizCountDownTimer();
     phaseOne();
