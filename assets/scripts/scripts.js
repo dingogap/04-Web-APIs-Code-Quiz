@@ -310,7 +310,7 @@ function inputInitials() {
         // Checks if element is a button
         if (element.matches("button") === true) {
             if (inputEl.value === "") {
-                window.alert("Please enter you initials to continue");
+                window.alert("\nYou did not enter your Initials (Maximum of 3 characters).\nPlease enter you initials to continue");
             } else {
                 updateHighScores();
                 timerEl.textContent = 0;

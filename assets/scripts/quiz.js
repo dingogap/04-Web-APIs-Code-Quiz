@@ -39,5 +39,5 @@ var quiz = [
 var quizTimer = {
     runtime: 75,
     penalty: 10,
-    message: 2
+    message: 5
 };
