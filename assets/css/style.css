@@ -32,12 +32,6 @@ header {
     margin-left: 5px;
 }
 
-#highscores:hover {
-    background-color: var(--light-patch);
-    color: white;
-    cursor: pointer;
-}
-
 .count-down {
     padding: 5px 10px;
     margin-right: 2px;
@@ -133,8 +127,6 @@ h1 {
 margin-top: 5px;
 }
 
-
-
 .right-wrong {
     font-style: italic;
     color: var(--result-text);
@@ -162,5 +154,9 @@ hr {
     .results-button {
         margin-top: 5px;
         margin-left: 0px;
+    }
+
+    .mouse-over:hover {
+        cursor: pointer;
     }
 }

@@ -14,14 +14,13 @@ The user can view the list of high scores at any time.
 ## Thinking Process & Structure
 I've used snippets of Javascript in websites I've built in the past but not really understood what was happening.
 
-I took this Challenge as an opportunity to develop my knowledge of the Web APIs and the DOM and decided to use JavaScript to build and run the entire quiz. It would be a chance to do more with JavaScript and explore its functionality and really see how it works.
+This Challenge was an opportunity to develop my knowledge of the Web APIs and the DOM by using JavaScript to build and run the entire quiz. It would be a chance to do more with JavaScript, explore its functionality and really see how it works.
 
 The entire quiz, including the HTML, is built and constructed in Javascript. I had to do the analysis first to know what would be required and then build the layout in HTML. Once that was done I could work out how to implement the quiz in JavaScript.
 
 The supplied GIF didn't show what happened when the Show HighScores link was clicked when a Quiz was running and what happened subsequently when the Go Back button was clicked. I handled that as if the history.back() method had been used. 
 
-This ended up using a lot more of my time than I thought. While my inital analysis was correct I encountered unexpected issues with eventListeners and timers that had to be debugged. I had to change my approach on several occasions to get round problems. I learnt so much about the DOM, eventListeners, onclick events, timers functions and scope.
-
+Doing the Challenge this way took much more time than I expected and I had to solve some tricky issues. I encountered unexpected issues with eventListeners and timers that had to be debugged & resolved. I had to change my approach on several occasions to get round problems. I learnt a lot about the DOM, eventListeners, onclick events, timers functions and scope.
 
 #### Note:
 I wouldn't do this in a real project:
@@ -29,14 +28,12 @@ I wouldn't do this in a real project:
 2. too many opportinuties for error
 3. debugging is time consuming 
 
-It was a very useful exercise and I think well worth the time. 
+It was a useful exercise and I think well worth the time. 
 
 ## Data
-Quiz questions, promptsandf answers are stored in an object in the separate quiz.js source file. This file also stores the timelengths - quiz duration, penalty time and message display time.
+Quiz questions, prompts and answers are stored in an object in the separate quiz.js source file. This file also stores the timelengths - quiz duration, penalty time and message display time. This means the questions and durations could be modified easily.
 
-High Scores are stored in local storage in an array named quizScores. Each item in the quizScores array contains the score and intials for each recorded quiz score. The score and initials pairs are themselves 2 item arrays. The quizScores array is sorted by scores in the array items.  
-
-I used a separate file to separate the data from the code so questions and quiz timings could be changed without having to modify the quiz code. Extra questions could be added too.
+High Scores are stored in local storage in an array named quizScores. Each item in the quizScores array contains the score and intials for each recorded score. The score and initials pairs are themselves 2 item arrays. The quizScores array is sorted by scores in the array items.  
 
 ## Web APIs Code Quiz Website Link
 Click the link to visit the deployed wbsite: [Web APIs Quiz][def1].
@@ -45,7 +42,7 @@ Click the link to visit the deployed wbsite: [Web APIs Quiz][def1].
 
 The Web APIs Quiz is a JavaScript app with 4 phases that run in a single webpage.
 1. Phase 1 - Introduction/Instructions
-2. Phase 2 - Multiple Choice Quesions (currently 5 but not linited by the application)
+2. Phase 2 - Multiple Choice Quesions (currently 5, limited by the dataset, not the application)
 3. Phase 3 - Score Recording
 4. Phase 4 - Displaying/Managing the High Scores
 

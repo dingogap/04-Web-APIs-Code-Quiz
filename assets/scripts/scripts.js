@@ -123,7 +123,6 @@ function phaseThree() {
 
 function phaseFour() {
     // Show the Highscores 
-    currentPhase = "phaseFour";
     removeChildElements(theQuizEl);
     removeChildElements(headerEl);
     leagueTable = readLeagueTable();
@@ -437,4 +436,5 @@ function goBack() {
     highScoresLink();
     quizCountDownTimer();
     phaseOne();
+
 }
