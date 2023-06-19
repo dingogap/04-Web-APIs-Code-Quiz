@@ -36,7 +36,7 @@ Quiz questions, prompts and answers are stored in an object in the separate quiz
 High Scores are stored in local storage in an array named quizScores. Each item in the quizScores array contains the score and intials for each recorded score. The score and initials pairs are themselves 2 item arrays. The quizScores array is sorted by scores in the array items.  
 
 ## Web APIs Code Quiz Website Link
-Click the link to visit the deployed wbsite: [Web APIs Quiz][def1].
+Click the link to visit the deployed website: [Web APIs Quiz][def1].
 
 ## Site Structure
 
