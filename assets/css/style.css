@@ -29,8 +29,15 @@ header {
 
 #highscores {
     color: var(--light-patch);
-    padding: 0px 10px;
+    padding: 2px 10px;
     margin-left: 5px;
+}
+
+#highscores:hover {
+    cursor: pointer;
+    background-color: var(--light-patch);
+    color: white;
+    border-radius: 5px;
 }
 
 .count-down {
@@ -145,7 +152,7 @@ margin-top: 5px;
     font-size: 1em;
 }
 
-/* Styling for smaller screens */
+/* Styling smaller screens */
 @media screen and (max-width:667px) {
     main {
         width: 90%;
