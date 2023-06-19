@@ -75,6 +75,12 @@ h1 {
     margin-right: auto;   
 }
 
+.mouse-over:hover {
+    cursor: pointer;
+    background-color: var(--light-patch);
+    color: white;
+}
+
 .framework {
     display: flex;
     flex-direction: column;
@@ -158,5 +164,7 @@ hr {
 
     .mouse-over:hover {
         cursor: pointer;
+        background-color: var(--dark-patch);
+        color: var(--light-text);
     }
 }
